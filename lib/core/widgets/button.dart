@@ -5,11 +5,13 @@ class Button extends StatelessWidget {
   final Color color;
   final Color textColor;
   final double borderRadius;
+  final onTap;
   const Button(
       {Key? key,
       required this.text,
       required this.color,
       required this.textColor,
+      required this.onTap,
       this.borderRadius = 8.0})
       : super(key: key);
 
@@ -24,7 +26,7 @@ class Button extends StatelessWidget {
           ),
           backgroundColor: MaterialStateColor.resolveWith((states) => color),
         ),
-        onPressed: () {},
+        onPressed: onTap,
         child: Text(
           text,
           style: TextStyle(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
+import 'package:work_ua/core/widgets/label.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/custom_divider.dart';
+import 'package:work_ua/features/authorization/presentation/widgets/register_form.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -15,13 +17,7 @@ class StartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'WORK.ua',
-                style: TextStyle(
-                    color: whiteColor,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
-              ),
+              const Label(textColor: whiteColor),
               const SizedBox(
                 height: 20,
               ),
@@ -51,9 +47,9 @@ class StartScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0)),
                 margin: const EdgeInsets.all(10.0),
                 padding: const EdgeInsets.all(20.0),
-                child: const Column(
+                child: Column(
                   children: [
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.fromLTRB(45.0, 0.0, 45.0, 0.0),
                       child: Text(
                         'Увійдіть або зареєструйтесь, щоб скористатись всіма перевагами Work.ua',
@@ -74,6 +70,32 @@ class StartScreen extends StatelessWidget {
                         text: 'Увійти',
                         color: crimsonColor,
                         textColor: whiteColor,
+                        onTap: () => showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Column(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Label(textColor: blueColor),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Зареєструйтесь",
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: RegisterForm(),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                       ),
                     ),
                     CustomDivider(
@@ -85,6 +107,7 @@ class StartScreen extends StatelessWidget {
                       height: 50,
                       width: double.infinity,
                       child: Button(
+                        onTap: () {},
                         text: 'Зареєструватись',
                         color: whiteColor,
                         textColor: blueColor,
