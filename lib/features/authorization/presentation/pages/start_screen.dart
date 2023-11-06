@@ -1,46 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
-import 'package:work_ua/core/widgets/label.dart';
-import 'package:work_ua/features/authorization/presentation/widgets/custom_divider.dart';
-import 'package:work_ua/features/authorization/presentation/widgets/register_form.dart';
+import 'package:work_ua/features/authorization/presentation/widgets/form/login_form.dart';
+import 'package:work_ua/features/authorization/presentation/widgets/form/register_form.dart';
+import 'package:work_ua/features/authorization/presentation/widgets/other/confidency_widget.dart';
+import 'package:work_ua/features/authorization/presentation/widgets/other/custom_divider.dart';
+import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
+import 'package:work_ua/core/widgets/start_screen_headers.dart';
 
 class StartScreen extends StatelessWidget {
+  static const id = "start_screen";
+
   const StartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: blueColor,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Label(textColor: whiteColor),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'Робота в Україні',
-                style: TextStyle(
-                    color: whiteColor,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Text(
-                'Зараз у нас 93656 актуальних вакансій.',
-                style: TextStyle(
-                    color: whiteColor,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w300),
-              ),
-              const SizedBox(
-                height: 100,
-              ),
+              const StartScreenHeaders(),
               Container(
                 decoration: BoxDecoration(
                     color: lightBlue,
@@ -60,7 +43,7 @@ class StartScreen extends StatelessWidget {
                             fontWeight: FontWeight.w300),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     SizedBox(
@@ -71,34 +54,18 @@ class StartScreen extends StatelessWidget {
                         color: crimsonColor,
                         textColor: whiteColor,
                         onTap: () => showModalBottomSheet(
+                          isScrollControlled: true,
                           context: context,
                           builder: (BuildContext context) {
-                            return Column(
-                              children: [
-                                SizedBox(
-                                  height: 50,
-                                ),
-                                Label(textColor: blueColor),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  "Зареєструйтесь",
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: RegisterForm(),
-                                ),
-                              ],
+                            return const ModalBottomSheetContent(
+                              title: "Увійти",
+                              form: LogInForm(),
                             );
                           },
                         ),
                       ),
                     ),
-                    CustomDivider(
+                    const CustomDivider(
                       text: 'або',
                       textColor: whiteColor,
                       lineColor: whiteColor,
@@ -107,26 +74,25 @@ class StartScreen extends StatelessWidget {
                       height: 50,
                       width: double.infinity,
                       child: Button(
-                        onTap: () {},
                         text: 'Зареєструватись',
                         color: whiteColor,
                         textColor: blueColor,
+                        onTap: () => showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const ModalBottomSheetContent(
+                              title: "Зареєструватись",
+                              form: RegisterForm(),
+                            );
+                          },
+                        ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
-                      child: Text(
-                        'Продовжуючи, ви приймаєте правила сайту та політику конфіденційності',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: whiteColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300),
-                      ),
-                    ),
+                    const ConfidencyPolitics()
                   ],
                 ),
               )
