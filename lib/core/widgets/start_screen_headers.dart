@@ -7,27 +7,26 @@ class StartScreenHeaders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(children: [
-      Label(textColor: whiteColor),
-         SizedBox(
+    return const Column(
+      children: [
+        Label(textColor: whiteColor),
+        SizedBox(
           height: 20,
         ),
-         Text(
+        Text(
           'Робота в Україні',
           style: TextStyle(
               color: whiteColor, fontSize: 25, fontWeight: FontWeight.bold),
         ),
-         SizedBox(
+        SizedBox(
           height: 15,
         ),
-         Text(
+        Text(
           'Зараз у нас 93656 актуальних вакансій.',
           style: TextStyle(
               color: whiteColor, fontSize: 15, fontWeight: FontWeight.w300),
         ),
-         SizedBox(
-          height: 100,
-        ),
-    ],);
+      ],
+    );
   }
 }

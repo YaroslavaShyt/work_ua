@@ -9,3 +9,5 @@ const crimsonColor = Color(0xFFE32469);
 const whiteColor = Color(0xFFFFFFFF);
 
 const blackColor = Color(0xFF000000);
+
+const darkGrayColor = Color(0xFFB4B4B4);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
-import 'package:work_ua/features/home/widgets/search_form/form_field.dart';
+import 'package:work_ua/features/search/presentation/widgets/search_form/form_field.dart';
 
 class SearchForm extends StatefulWidget {
   const SearchForm({super.key});
