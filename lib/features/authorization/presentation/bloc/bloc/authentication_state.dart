@@ -5,6 +5,12 @@ sealed class AuthenticationState {}
 
 final class AuthenticationInitial extends AuthenticationState {}
 
-final class AuthenticationSuccess extends AuthenticationState {}
+final class AuthenticationSuccess extends AuthenticationState {
+  final SuccessModel model;
+  AuthenticationSuccess(this.model);
+}
 
-final class AuthenticationFail extends AuthenticationState {}
+final class AuthenticationFail extends AuthenticationState {
+  final SuccessModel model;
+  AuthenticationFail(this.model);
+}

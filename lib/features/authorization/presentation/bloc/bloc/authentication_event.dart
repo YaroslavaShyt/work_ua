@@ -8,7 +8,14 @@ sealed class AuthenticationEvent extends Equatable {
 }
 
 class AuthenticationInitiateEvent extends AuthenticationEvent {
-  const AuthenticationInitiateEvent();
+  final CandidateRegisterModel? modelCandidate;
+  final CompanyRegisterModel? modelCompany;
+  const AuthenticationInitiateEvent({this.modelCandidate, this.modelCompany});
   @override
   List<Object?> get props => [];
+}
+
+class LoginInitiateEvent extends AuthenticationEvent{
+  final LoginModel model;
+  const LoginInitiateEvent({required this.model});
 }
