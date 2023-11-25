@@ -38,21 +38,6 @@ class _RegisterFormState extends State<RegisterFormCandidate> {
   DateTime? dateOfBitrh;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _submitForm() {
-    print('in func');
-    if (_formKey.currentState!.validate()) {
-      print("tapped");
-    } else {
-      print("tapped1");
-      print(_formKey.currentState);
-      _resetForm();
-    }
-  }
-
-  void _resetForm() {
-    _formKey.currentState!.reset();
-  }
-
   @override
   void dispose() {
     emailController.dispose();

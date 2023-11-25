@@ -10,14 +10,15 @@ class FormFieldText extends StatelessWidget {
       {super.key,
       required this.controller,
       required this.title,
-     // required this.validator,
-      this.formatters
-      });
+      // required this.validator,
+      this.formatters});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-    //  validator: (value) => validator(value),
+      //  validator: (value) => validator(value),
+      maxLines: null,
+      minLines: 1,
       controller: controller,
       decoration: InputDecoration(
           border: OutlineInputBorder(

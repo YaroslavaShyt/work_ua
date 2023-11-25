@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/colors.dart';
-import 'package:work_ua/features/profile/widgets/items_menu_list.dart';
-import 'package:work_ua/features/profile/widgets/welcome_widget.dart';
+import 'package:work_ua/features/profile/presentation/bloc/cv_bloc.dart';
+import 'package:work_ua/features/profile/presentation/widgets/items_menu_list.dart';
+import 'package:work_ua/features/profile/presentation/widgets/welcome_widget.dart';
 import 'package:work_ua/features/search/presentation/widgets/home_list_of_categories/hor_list_of_categories.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -13,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
       child: Scaffold(
         body: Stack(
           children: [
-            Positioned(
+            const Positioned(
               top: 0,
               left: 0,
               right: 0,

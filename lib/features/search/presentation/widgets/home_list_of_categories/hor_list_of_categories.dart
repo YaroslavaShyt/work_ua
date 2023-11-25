@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
+import 'package:work_ua/features/profile/presentation/bloc/cv_bloc.dart';
+import 'package:work_ua/features/profile/presentation/widgets/my_cvs/create_cv_form.dart';
 import 'package:work_ua/features/search/presentation/widgets/home_list_of_categories/categories_list_item.dart';
 
 class HorizontalCategoriesList extends StatelessWidget {
   final Color color;
   final Color fontColor;
-  const HorizontalCategoriesList({super.key, required this.color, required this.fontColor});
+  const HorizontalCategoriesList(
+      {super.key, required this.color, required this.fontColor});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,23 @@ class HorizontalCategoriesList extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(right: 20.0),
-            child: CategoryListItem(color: color, fontColor: fontColor,),
+            child: CategoryListItem(
+              color: color,
+              fontColor: fontColor,
+              title: 'Створити резюме',
+              function: () => {
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) {
+                      return BlocProvider(
+                        create: (context) => CVBloc(),
+                        child: const ModalBottomSheetContent(
+                            form: CreateCVForm(), title: 'Створити резюме'),
+                      );
+                    })
+              },
+            ),
           );
         });
   }

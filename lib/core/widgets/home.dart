@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/features/notifications/pages/notifications_screen.dart';
-import 'package:work_ua/features/profile/pages/profile_screen.dart';
+import 'package:work_ua/features/profile/presentation/pages/profile_screen.dart';
 import 'package:work_ua/features/saved/pages/saved_screen.dart';
 import 'package:work_ua/features/search/presentation/pages/search_screen.dart';
 import 'package:work_ua/features/recommended/pages/recommended_screen.dart';
