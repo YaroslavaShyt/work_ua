@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_ua/core/colors.dart';
 
 class CategoryListItem extends StatelessWidget {
   final Color color;
@@ -15,14 +16,18 @@ class CategoryListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width - 150,
+      width: MediaQuery.of(context).size.width - 40,
       decoration:
           BoxDecoration(color: color, borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
-            icon: const Icon(Icons.abc_sharp),
+            icon: const Icon(
+              Icons.contact_page_outlined,
+              color: whiteColor,
+              size: 50,
+            ),
             onPressed: () => {function()},
           ),
           Text(

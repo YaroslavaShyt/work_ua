@@ -26,12 +26,13 @@ class ProfileScreen extends StatelessWidget {
             Positioned(
                 top: 110,
                 left: 20,
+                right: 20,
                 child: SizedBox(
                   height: 100,
-                  width: MediaQuery.of(context).size.width - 50,
+                  width: MediaQuery.of(context).size.width,
                   child: const HorizontalCategoriesList(
-                    color: whiteColor,
-                    fontColor: blackColor,
+                    color: greenColor,
+                    fontColor: whiteColor,
                   ),
                 )),
             Positioned(

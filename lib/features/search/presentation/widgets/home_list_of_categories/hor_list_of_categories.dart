@@ -15,10 +15,10 @@ class HorizontalCategoriesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 4,
+        itemCount: 1,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(right: 20.0),
+            padding: const EdgeInsets.only(right: 0.0),
             child: CategoryListItem(
               color: color,
               fontColor: fontColor,
