@@ -17,7 +17,7 @@ class MessageInputField extends StatelessWidget {
             controller: controller,
             decoration: InputDecoration(
                 border: OutlineInputBorder(
-                    borderSide: BorderSide(color: greenColor),
+                    borderSide: const BorderSide(color: greenColor),
                     borderRadius: BorderRadius.circular(20.0))),
           ),
         ),
