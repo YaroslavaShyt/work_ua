@@ -1,15 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/core/widgets/home.dart';
-import 'package:work_ua/features/authorization/data/models/candidate_register_model.dart';
-import 'package:work_ua/features/authorization/data/models/company_register_model.dart';
+import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
 import 'package:work_ua/features/authorization/presentation/bloc/bloc/authentication_bloc.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field.dart';
-import 'package:work_ua/features/authorization/presentation/widgets/form/form_field_formatters.dart';
-import 'form_field_validators.dart';
 
 class RegisterFormCompany extends StatefulWidget {
   const RegisterFormCompany({super.key});
@@ -62,7 +58,7 @@ class _RegisterFormState extends State<RegisterFormCompany> {
           });
         }
         if (state is AuthenticationFail) {
-          print('company authentication fail');
+          //print('company authentication fail');
           WidgetsBinding.instance.addPostFrameCallback((_) {
             showDialog(
                 context: context,
@@ -153,9 +149,10 @@ class _RegisterFormState extends State<RegisterFormCompany> {
                     child: Button(
                       text: "Зареєструватись",
                       onTap: () {
-                        var model = CompanyRegisterModel(
+                        var model = UserRegisterModel(
                             name: 'варварп',
                             title: 'ваправпр',
+                            city: 'lypovets',
                             workersQuantity: 'варпвар',
                             serviceType: 'вапрвапр',
                             description: 'вапрвапр',
@@ -163,7 +160,7 @@ class _RegisterFormState extends State<RegisterFormCompany> {
                             email: 'варварп',
                             password: 'вапрвапрвап');
                         context.read<AuthenticationBloc>().add(
-                            AuthenticationInitiateEvent(modelCompany: model));
+                            AuthenticationInitiateEvent(model: model));
                       },
                       color: crimsonColor,
                       textColor: whiteColor,

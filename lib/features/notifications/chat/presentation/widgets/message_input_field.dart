@@ -3,7 +3,9 @@ import 'package:work_ua/core/colors.dart';
 
 class MessageInputField extends StatelessWidget {
   final TextEditingController controller;
-  const MessageInputField({super.key, required this.controller});
+  final function;
+  const MessageInputField(
+      {super.key, required this.controller, required this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +27,13 @@ class MessageInputField extends StatelessWidget {
           width: 20,
         ),
         Container(
-          padding: const EdgeInsets.all(10),
           decoration:
               const BoxDecoration(shape: BoxShape.circle, color: greenColor),
-          child: const Icon(
-            Icons.send,
-            color: whiteColor,
+          child: IconButton(
+            icon: const Icon(Icons.send, color: whiteColor),
+            onPressed: () {
+              function(controller);
+            },
           ),
         )
       ],

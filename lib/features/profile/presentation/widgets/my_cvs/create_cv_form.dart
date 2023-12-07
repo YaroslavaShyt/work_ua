@@ -4,7 +4,7 @@ import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field.dart';
 import 'package:work_ua/features/profile/domain/cv_model.dart';
-import 'package:work_ua/features/profile/presentation/bloc/cv_bloc.dart';
+import 'package:work_ua/features/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/features/profile/presentation/pages/my_cvs_screen.dart';
 
 class CreateCVForm extends StatefulWidget {

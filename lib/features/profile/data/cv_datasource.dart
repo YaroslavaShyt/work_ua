@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:work_ua/core/api_datasource.dart';
 import 'package:work_ua/core/success_model.dart';
-import 'package:work_ua/features/authorization/data/models/login_model.dart';
 import 'package:work_ua/features/profile/domain/cv_model.dart';
 
 class CVDatasource {

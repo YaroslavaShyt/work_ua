@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/widgets/blue_appbar.dart';
-import 'package:work_ua/features/profile/presentation/bloc/cv_bloc.dart';
+import 'package:work_ua/features/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/features/profile/presentation/widgets/my_cvs/my_cvs_list.dart';
 
 class MyCVsScreen extends StatefulWidget {

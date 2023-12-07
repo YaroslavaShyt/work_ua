@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/core/widgets/home.dart';
-import 'package:work_ua/features/authorization/data/models/candidate_register_model.dart';
+import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
 import 'package:work_ua/features/authorization/presentation/bloc/bloc/authentication_bloc.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field_formatters.dart';
@@ -150,7 +150,7 @@ class _RegisterFormState extends State<RegisterFormCandidate> {
                     child: Button(
                       text: "Зареєструватись",
                       onTap: () {
-                        var model = CandidateRegisterModel(
+                        var model = UserRegisterModel(
                             name: nameController.text,
                             patronimyc: patronimycController.text,
                             surname: surnameController.text,
@@ -160,7 +160,7 @@ class _RegisterFormState extends State<RegisterFormCandidate> {
                             email: emailController.text,
                             password: passwordController.text);
                         context.read<AuthenticationBloc>().add(
-                            AuthenticationInitiateEvent(modelCandidate: model));
+                            AuthenticationInitiateEvent(model: model));
                       },
                       color: crimsonColor,
                       textColor: whiteColor,

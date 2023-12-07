@@ -5,7 +5,7 @@ import 'package:work_ua/core/widgets/blue_appbar.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
 import 'package:work_ua/features/profile/domain/cv_model.dart';
-import 'package:work_ua/features/profile/presentation/bloc/cv_bloc.dart';
+import 'package:work_ua/features/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/features/profile/presentation/widgets/my_cvs/create_cv_form.dart';
 
 class CVScreen extends StatelessWidget {

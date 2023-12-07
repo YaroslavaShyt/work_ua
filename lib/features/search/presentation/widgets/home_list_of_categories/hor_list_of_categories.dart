@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
-import 'package:work_ua/features/profile/presentation/bloc/cv_bloc.dart';
+import 'package:work_ua/features/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/features/profile/presentation/widgets/my_cvs/create_cv_form.dart';
 import 'package:work_ua/features/search/presentation/widgets/home_list_of_categories/categories_list_item.dart';
 

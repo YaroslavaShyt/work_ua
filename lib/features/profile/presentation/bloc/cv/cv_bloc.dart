@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:work_ua/core/success_model.dart';
-import 'package:work_ua/features/profile/data/datasource.dart';
+import 'package:work_ua/features/profile/data/cv_datasource.dart';
 import 'package:work_ua/features/profile/domain/cv_model.dart';
 
 part 'cv_event.dart';
