@@ -1,41 +1,40 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/services/shared_pref_token.dart';
 import 'package:work_ua/core/success_model.dart';
-import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
+import 'package:work_ua/features/profile/domain/cv_model.dart';
 
-class UserDatasource {
+class ChatDatasource {
   final Dio dio = Dio();
+
+  Future<SuccessModel> create(model) async {
+    //print(model);
+    try {
+    //  print(jsonEncode(model.modelMap));
+     // print(APIDatasource.createCvUrl);
+      // print(model.usertype);
+      final response = await dio.post(APIDatasource.chatsUrl,
+          options: buildOptions(), data: jsonEncode(model.modelMap));
+      //print('after response?');
+      return SuccessModel(
+          response.data["success"],
+          response.data["data"]["message"] ?? 'No message provided.',
+          response.statusCode ?? 0);
+    } catch (e) {
+      print(e.toString());
+      return SuccessModel(false, e.toString(), 0);
+    }
+  }
 
   Future<dynamic> read(String userId) async {
     try {
       // print(jsonEncode(model.modelMap));
       // print(model.usertype);
-      String token = await getAccessToken();
-      //print(token);
-      //print('${APIDatasource.userUrl}$userId');
-      final response = await dio.get("${APIDatasource.userUrl}$userId",
-          options: buildOptions(authorization: 'Bearer $token'));
+      final response = await dio.get(APIDatasource.chatsUrl,
+          options: buildOptions(),);
 
       if (response.statusCode == 200) {
-        if (response.data["usertype"] == 'candidate') {
-          return UserRegisterModel(
-              id: response.data["_id"],
-              name: response.data["name"],
-              contactNumber: response.data["contactNumber"],
-              email: response.data["email"],
-              city: response.data["city"].toString(),
-              description: response.data["description"]);
-        } else {
-          return UserRegisterModel(
-              id: response.data["_id"],
-              name: response.data["name"],
-              title: response.data["title"],
-              contactNumber: response.data["contactNumber"],
-              email: response.data["email"],
-              city: response.data["city"].toString(),
-              description: response.data["description"]);
-        }
+       // return ChatModel();
       } else {
         return SuccessModel(
             response.data["success"],
@@ -47,7 +46,35 @@ class UserDatasource {
       return SuccessModel(false, e.toString(), 0);
     }
   }
-/*
+
+  Future<dynamic> readAll(Map<String, dynamic> conditions) async {
+    List<CVModel> cvs = [];
+    try {
+      // print(jsonEncode(model.modelMap));
+      // print(model.usertype);
+      // print(APIDatasource.getAllCvUrl);
+      // print(conditions);
+      final response = await dio.get(APIDatasource.getAllCvUrl,
+          options: buildOptions(), data: jsonEncode(conditions));
+
+      if (response.statusCode == 200) {
+        var listOfCVs = response.data["data"];
+        for (var i = 0; i < listOfCVs.length; i++) {
+          cvs.add(CVModel.fromJson(listOfCVs[i]));
+        }
+        return cvs;
+      } else {
+        return SuccessModel(
+            response.data["success"],
+            response.data["data"]["message"] ?? 'No message provided.',
+            response.statusCode ?? 0);
+      }
+    } catch (e) {
+      print(e.toString());
+      return SuccessModel(false, e.toString(), 0);
+    }
+  }
+
   Future<SuccessModel> update(CVModel model) async {
     try {
       //print(jsonEncode(model.modelMap));
@@ -80,13 +107,13 @@ class UserDatasource {
       print(e.toString());
       return SuccessModel(false, e.toString(), 0);
     }
-  }*/
+  }
 
   Options buildOptions({String? authorization}) {
     return Options(
       headers: {
         'Content-Type': 'application/json',
-        if (authorization != null) 'token': authorization,
+        if (authorization != null) 'Authorization': authorization,
       },
     );
   }

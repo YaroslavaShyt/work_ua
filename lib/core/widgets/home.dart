@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/features/notifications/chat/presentation/provider/chat_notifier.dart';
 import 'package:work_ua/features/notifications/pages/notifications_screen.dart';
 import 'package:work_ua/features/profile/presentation/bloc/user/user_bloc.dart';
 import 'package:work_ua/features/profile/presentation/pages/profile_screen.dart';
 import 'package:work_ua/features/saved/pages/saved_screen.dart';
 import 'package:work_ua/features/search/presentation/pages/search_screen.dart';
 import 'package:work_ua/features/recommended/pages/recommended_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = "home_screen";
@@ -20,12 +22,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = const [
-    SearchScreen(),
-    RecommendedScreen(),
-    SavedScreen(),
-    NotificationsScreen(),
-    ProfileScreen(),
+  final List _screens = [
+    const SearchScreen(),
+    const RecommendedScreen(),
+    const SavedScreen(),
+    ChangeNotifierProvider(
+      child: const NotificationsScreen(),
+      create: (context) => ChatNotifier(),
+    ),
+    const ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

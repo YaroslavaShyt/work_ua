@@ -26,10 +26,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var data = await getUserFieldNamed('id');
 
     if (data.isNotEmpty) {
-      print('success');
+      //print('success');
       context.read<UserBloc>().add(InitiateGetUserEvent(userId: data));
-    }else{
-      print('failure');
     }
   }
 

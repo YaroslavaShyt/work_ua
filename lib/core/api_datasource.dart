@@ -15,4 +15,6 @@ class APIDatasource {
   static const getCvUrl = "${cvsUrl}getCV";
   static const getAllCvUrl = "${cvsUrl}getAllCV";
   static const deleteCvUrl = "${cvsUrl}deleteCV";
+
+  static const chatsUrl = "${apiUrl}chats/";
 }
