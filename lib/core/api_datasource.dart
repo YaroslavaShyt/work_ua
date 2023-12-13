@@ -1,5 +1,5 @@
 class APIDatasource {
-  static const url = "http://192.168.1.4:5000/";
+  static const url = "http://192.168.1.2:5000/";
 
   static const apiUrl = "${url}api/";
   static const registerUrl = "${apiUrl}register";
@@ -7,7 +7,12 @@ class APIDatasource {
 
   static const userUrl = "${apiUrl}users/";
 
-  static const jobsUrl = "${apiUrl}jobs/";
+  static const jobsUrl = "${apiUrl}jobs";
+  static const getJobs = "$jobsUrl?searchString=";
+  static const getJob = "$jobsUrl/";
+  static const createJob = "$jobsUrl/";
+  static const updateJob = "$jobsUrl/";
+  static const deleteJob = "$jobsUrl/";
 
   static const cvsUrl = "${apiUrl}cvs/";
   static const createCvUrl = "${cvsUrl}createCV";
@@ -17,4 +22,6 @@ class APIDatasource {
   static const deleteCvUrl = "${cvsUrl}deleteCV";
 
   static const chatsUrl = "${apiUrl}chats/";
+
+  static const messagesUrl = "${apiUrl}messages/";
 }

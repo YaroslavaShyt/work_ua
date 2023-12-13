@@ -18,8 +18,8 @@ class ChatListElement extends StatelessWidget {
     return ListTile(
       tileColor: dirtyWhiteColor,
       leading: const Icon(Icons.person),
-      title: Text(name),
-      subtitle: Text(position),
+      title: Text(position),
+      subtitle: Text(name),
       trailing: Container(
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(shape: BoxShape.circle, color: redColor),

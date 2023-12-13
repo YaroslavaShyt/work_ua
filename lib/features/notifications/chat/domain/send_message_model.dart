@@ -1,0 +1,32 @@
+import 'dart:convert';
+
+SendMessageModel sendMessageModelFromJson(String str) =>
+    SendMessageModel.fromJson(json.decode(str));
+
+String sendMessageModelToJson(SendMessageModel data) =>
+    json.encode(data.toJson());
+
+class SendMessageModel {
+  String content;
+  String chatId;
+  String receiver;
+
+  SendMessageModel({
+    required this.content,
+    required this.chatId,
+    required this.receiver,
+  });
+
+  factory SendMessageModel.fromJson(Map<String, dynamic> json) =>
+      SendMessageModel(
+        content: json["content"],
+        chatId: json["chatId"],
+        receiver: json["receiver"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "content": content,
+        "chatId": chatId,
+        "receiver": receiver,
+      };
+}

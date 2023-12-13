@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:work_ua/core/widgets/home.dart';
 import 'package:work_ua/features/authorization/presentation/pages/start_screen.dart';
+import 'package:work_ua/features/notifications/chat/presentation/bloc/message_bloc/message_bloc.dart';
 import 'package:work_ua/features/notifications/chat/presentation/pages/chat_screen.dart';
+import 'package:work_ua/features/notifications/chat/presentation/provider/chat_notifier.dart';
 import 'package:work_ua/features/profile/domain/cv_model.dart';
 import 'package:work_ua/features/profile/presentation/pages/cv_screen.dart';
 import 'package:work_ua/features/profile/presentation/pages/my_cvs_screen.dart';
@@ -21,10 +25,16 @@ class AppRouter {
         var model = routeSettings.arguments as CVModel;
         return MaterialPageRoute(builder: (_) => CVScreen(model: model));
       case ChatScreen.id:
-        var data = routeSettings.arguments;
+        String chatId = routeSettings.arguments as String;
         return MaterialPageRoute(
-            builder: (_) =>
-                const ChatScreen(name: 'name', position: 'position'));
+            builder: (_) => ChangeNotifierProvider(
+                  child: BlocProvider(
+                      create: (context) => MessageBloc(),
+                      child: ChatScreen(
+                        chatId: chatId,
+                      )),
+                  create: (context) => ChatNotifier(),
+                ));
       default:
         return null;
     }

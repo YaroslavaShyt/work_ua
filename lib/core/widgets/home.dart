@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/features/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
+import 'package:work_ua/features/notifications/chat/presentation/bloc/message_bloc/message_bloc.dart';
 import 'package:work_ua/features/notifications/chat/presentation/provider/chat_notifier.dart';
 import 'package:work_ua/features/notifications/pages/notifications_screen.dart';
 import 'package:work_ua/features/profile/presentation/bloc/user/user_bloc.dart';
 import 'package:work_ua/features/profile/presentation/pages/profile_screen.dart';
 import 'package:work_ua/features/saved/pages/saved_screen.dart';
+import 'package:work_ua/features/search/presentation/bloc/search_bloc.dart';
 import 'package:work_ua/features/search/presentation/pages/search_screen.dart';
 import 'package:work_ua/features/recommended/pages/recommended_screen.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  final List _screens = [
+  final List<Widget> _screens = [
     const SearchScreen(),
     const RecommendedScreen(),
     const SavedScreen(),
@@ -41,8 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => UserBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserBloc>(create: (context) => UserBloc()),
+        BlocProvider<ChatBloc>(create: (context) => ChatBloc()),
+        BlocProvider<SearchBloc>(create: (context) => SearchBloc()),
+      ],
       child: Scaffold(
           resizeToAvoidBottomInset: true,
           backgroundColor: blueColor,

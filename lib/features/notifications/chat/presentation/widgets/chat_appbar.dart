@@ -19,11 +19,11 @@ class ChatAppbar extends StatelessWidget implements PreferredSizeWidget {
           child: Column(
             children: [
               Text(
-                name,
+                position,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
-                position,
+                name,
                 style: const TextStyle(fontSize: 13.0, color: darkGrayColor),
               )
             ],
