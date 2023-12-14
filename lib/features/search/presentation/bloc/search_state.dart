@@ -12,7 +12,7 @@ final class SearchInitial extends SearchState {}
 class SearchVacancySuccess extends SearchState {
   final List<JobModel> models;
   SearchVacancySuccess({required this.models}){
-    print('in search success');
+    //print('in search success');
   }
 }
 

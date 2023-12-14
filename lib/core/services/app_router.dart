@@ -9,8 +9,10 @@ import 'package:work_ua/features/notifications/chat/presentation/provider/chat_n
 import 'package:work_ua/features/profile/domain/cv_model.dart';
 import 'package:work_ua/features/profile/presentation/pages/cv_screen.dart';
 import 'package:work_ua/features/profile/presentation/pages/my_cvs_screen.dart';
+import 'package:work_ua/features/search/data/job_model.dart';
 import 'package:work_ua/features/search/presentation/bloc/search_bloc.dart';
 import 'package:work_ua/features/search/presentation/pages/search_result.dart';
+import 'package:work_ua/features/search/presentation/pages/vacancy_screen.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings routeSettings) {
@@ -46,6 +48,9 @@ class AppRouter {
                     searchData: searchData,
                   ),
                 ));
+      case VacancyScreen.id:
+        JobModel model = routeSettings.arguments as JobModel;
+        return MaterialPageRoute(builder: (_) => VacancyScreen(model: model));
       default:
         return null;
     }

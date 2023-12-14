@@ -30,26 +30,38 @@ class _SearchAppbarState extends State<SearchAppbar> {
         },
       ),
       title: Center(
-        child: Row(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 300,
-              child: TextField(
-                controller: searchController,
-                onChanged: (data) {
-                  context
-                      .read<SearchBloc>()
-                      .add(InitiateSearchVacancyEvent(searchString: data));
-                },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Row(
+            children: [
+              Container(
+                height: 40,
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                decoration: const BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                width: MediaQuery.of(context).size.width - 150,
+                child: TextField(
+                  controller: searchController,
+                  onChanged: (data) {
+                    context
+                        .read<SearchBloc>()
+                        .add(InitiateSearchVacancyEvent(searchString: data));
+                  },
+                  decoration: const InputDecoration(
+                    border:
+                        InputBorder.none, // Встановлення лінії границі на жодну
+                  ),
+                ),
               ),
-            ),
-            IconButton(
-                onPressed: searchController.clear,
-                icon: const Icon(
-                  Icons.close,
-                  color: whiteColor,
-                ))
-          ],
+              IconButton(
+                  onPressed: searchController.clear,
+                  icon: const Icon(
+                    Icons.close,
+                    color: whiteColor,
+                  ))
+            ],
+          ),
         ),
       ),
     );

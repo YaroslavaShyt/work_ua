@@ -21,19 +21,19 @@ class _SearchResultPageState extends State<SearchResultPage> {
     context
         .read<SearchBloc>()
         .add(InitiateSearchVacancyEvent(searchString: widget.searchData));
-    setState(() {});
+    // setState(() {});
     return Scaffold(
-      appBar: SearchAppbar(),
+      appBar: const SearchAppbar(),
       body: BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
         if (state is SearchVacancyFailure ||
             (state is SearchVacancySuccess && state.models.isEmpty)) {
           return const NoVacancies();
         }
         if (state is SearchVacancySuccess) {
-          print('in if');
+          // print('in if');
           return VacancyList(vacancies: state.models);
         }
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       }),
     );
   }

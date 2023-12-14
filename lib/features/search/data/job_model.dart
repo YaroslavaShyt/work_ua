@@ -9,6 +9,7 @@ JobModel jobModelFromJson(String str) => JobModel.fromJson(json.decode(str));
 String jobModelToJson(JobModel data) => json.encode(data.toJson());
 
 class JobModel {
+  String user;
   String id;
   String date;
   String title;
@@ -20,6 +21,7 @@ class JobModel {
   int v;
 
   JobModel({
+    required this.user,
     required this.id,
     required this.date,
     required this.title,
@@ -32,6 +34,7 @@ class JobModel {
   });
 
   factory JobModel.fromJson(Map<String, dynamic> json) => JobModel(
+        user: json["user"] ?? 'test user ',
         id: json["_id"],
         date: json["date"],
         title: json["title"],
@@ -53,5 +56,6 @@ class JobModel {
         "experience": experience,
         "description": description,
         "__v": v,
+        "user": user
       };
 }
