@@ -9,19 +9,25 @@ import 'package:work_ua/features/profile/domain/cv_model.dart';
 class ChatDatasource {
   final Dio dio = Dio();
 
-  Future<SuccessModel> createChat(model) async {
+  Future<dynamic> createChat(ChatModel model) async {
     //print(model);
     try {
       //  print(jsonEncode(model.modelMap));
       // print(APIDatasource.createCvUrl);
       // print(model.usertype);
+      String token = await getAccessToken();
       final response = await dio.post(APIDatasource.chatsUrl,
-          options: buildOptions(), data: jsonEncode(model.modelMap));
+          options: buildOptions(authorization: 'Bearer $token'),
+          data: jsonEncode(model.toJson()));
       //print('after response?');
-      return SuccessModel(
-          response.data["success"],
-          response.data["data"]["message"] ?? 'No message provided.',
-          response.statusCode ?? 0);
+      if (response.statusCode == 200) {
+        return ChatModel.fromJson(response.data);
+      } else {
+        return SuccessModel(
+            response.data["success"],
+            response.data["data"]["message"] ?? 'No message provided.',
+            response.statusCode ?? 0);
+      }
     } catch (e) {
       print(e.toString());
       return SuccessModel(false, e.toString(), 0);

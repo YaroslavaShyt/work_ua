@@ -5,17 +5,15 @@ import 'package:work_ua/features/profile/presentation/widgets/my_cvs/my_cv_list_
 
 class MyCVsList extends StatelessWidget {
   final List<CVModel> cvs;
-  const MyCVsList({super.key, required this.cvs});
+  final onTap;
+  const MyCVsList({super.key, required this.cvs, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (context, index) {
         return GestureDetector(
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed(CVScreen.id, arguments: cvs[index]);
-            },
+            onTap: onTap,
             child: MyCVListItem(model: cvs[index]));
       },
       itemCount: cvs.length,

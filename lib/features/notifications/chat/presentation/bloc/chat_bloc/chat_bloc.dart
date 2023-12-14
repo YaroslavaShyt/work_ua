@@ -25,4 +25,18 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       emit(GetChatsFailure(model: SuccessModel(false, error.toString(), 0)));
     }
   }
+
+  _onCreateChats(event, emit) async {
+    try {
+      var chats = await datasource.createChat(event.model);
+      if (chats is List<ChatModel>) {
+        emit(GetChatsSuccess(chats: chats));
+      } else {
+        emit(GetChatsFailure(model: chats));
+      }
+    } catch (error) {
+      emit(GetChatsFailure(model: SuccessModel(false, error.toString(), 0)));
+    }
+  }
+  
 }

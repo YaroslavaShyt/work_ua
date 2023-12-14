@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/services/shared_pref_user.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field.dart';
 import 'package:work_ua/features/profile/domain/cv_model.dart';
@@ -22,6 +23,7 @@ class _CreateCVFormState extends State<CreateCVForm> {
   final TextEditingController cityController = TextEditingController(text: '');
   final TextEditingController descriptionController =
       TextEditingController(text: '');
+  late String userId;
 
   @override
   void dispose() {
@@ -39,6 +41,11 @@ class _CreateCVFormState extends State<CreateCVForm> {
       cityController.text = widget.model!.city;
       descriptionController.text = widget.model!.description;
     }
+    initData();
+  }
+
+  Future<void> initData() async {
+    userId = await getUserFieldNamed('id');
   }
 
   @override
@@ -111,6 +118,7 @@ class _CreateCVFormState extends State<CreateCVForm> {
                     if (widget.isUpdate) {
                       print(widget.model!.id);
                       var model = CVModel(
+                          userId: userId,
                           id: widget.model!.id,
                           position: positionController.text,
                           city: cityController.text,
@@ -120,6 +128,7 @@ class _CreateCVFormState extends State<CreateCVForm> {
                           .add(CVUpdateInitiateEvent(model: model));
                     } else {
                       var model = CVModel(
+                          userId: userId,
                           position: positionController.text,
                           city: cityController.text,
                           description: descriptionController.text);

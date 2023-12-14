@@ -34,7 +34,7 @@ class CVBloc extends Bloc<CVEvent, CVState> {
     try {
       var result = await datasource.readAll(event.conditions);
       if (result is List<CVModel>) {
-        // print(result);
+        print(result);
         emit(CVGetAllSuccess(models: result));
       } else {
         emit(CVGetAllFail(model: result));

@@ -131,28 +131,28 @@ class _VacancyScreenState extends State<VacancyScreen> {
                   text: 'Відгукнутись',
                   textColor: whiteColor,
                   color: crimsonColor,
-                  onTap: () =>
-                      BlocBuilder<CVBloc, CVState>(builder: (context, state) {
-                    WidgetsBinding.instance?.addPostFrameCallback((_) {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (BuildContext context) {
-                            if (state is CVGetAllSuccess) {
-                              return ModalBottomSheetContent(
-                                title: "Увійти",
-                                form: MyCVsList(cvs: state.models),
-                              );
-                            }
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          });
-                    });
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }),
+                  onTap: () => showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (BuildContext context) {
+                        var cvBloc = context.read<CVBloc>();
+
+                        if (cvBloc.state is CVGetAllSuccess) {
+                          return ModalBottomSheetContent(
+                            title: "Увійти",
+                            form: SizedBox(
+                              height: 200,
+                              child: MyCVsList(
+                                onTap: (){
+                                  
+                                },
+                                  cvs:
+                                      (cvBloc.state as CVGetAllSuccess).models),
+                            ),
+                          );
+                        }
+                        return const CircularProgressIndicator();
+                      }),
                 ),
               )
             ],

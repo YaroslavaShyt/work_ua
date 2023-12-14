@@ -35,6 +35,7 @@ class CVDatasource {
 
       if (response.statusCode == 200) {
         return CVModel(
+            userId: response.data["data"]["userId"],
             id: response.data["data"]["id"],
             position: response.data["data"]["position"],
             city: response.data["data"]["city"].toString(),

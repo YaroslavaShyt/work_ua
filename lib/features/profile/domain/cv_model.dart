@@ -7,7 +7,7 @@ class CVModel {
 
   CVModel(
       {this.id,
-      this.userId = "655c7d917de5799cf02aef77",
+      required this.userId,
       required this.position,
       required this.city,
       required this.description});

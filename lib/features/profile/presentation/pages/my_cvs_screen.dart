@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:work_ua/core/services/shared_pref_user.dart';
 import 'package:work_ua/core/widgets/blue_appbar.dart';
 import 'package:work_ua/features/profile/presentation/bloc/cv/cv_bloc.dart';
+import 'package:work_ua/features/profile/presentation/pages/cv_screen.dart';
 import 'package:work_ua/features/profile/presentation/widgets/my_cvs/my_cvs_list.dart';
 
 class MyCVsScreen extends StatefulWidget {
@@ -14,14 +16,20 @@ class MyCVsScreen extends StatefulWidget {
 }
 
 class _MyCVsScreenState extends State<MyCVsScreen> {
+  late String userId;
+  
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    context.read<CVBloc>().add(
-          CVReadAllInitiateEvent(
-            conditions: const {"userId": "655c7d917de5799cf02aef77"},
-          ),
-        );
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  Future<void> initData() async {
+    userId = await getUserFieldNamed('id');
+    context
+        .read<CVBloc>()
+        .add(CVReadAllInitiateEvent(conditions: {"userId": userId}));
   }
 
   @override
@@ -41,6 +49,10 @@ class _MyCVsScreenState extends State<MyCVsScreen> {
                   );
                 }
                 return MyCVsList(
+                  onTap: (index){
+                    Navigator.of(context)
+                        .pushNamed(CVScreen.id, arguments: index);
+                  },
                   cvs: state.models,
                 );
               }
@@ -51,7 +63,7 @@ class _MyCVsScreenState extends State<MyCVsScreen> {
               }
               if (state is CVDeleteSuccess) {
                 context.read<CVBloc>().add(CVReadAllInitiateEvent(
-                    conditions: const {"userId": "655c7d917de5799cf02aef77"}));
+                    conditions: {"userId": userId}));
               }
               return const Center(child: CircularProgressIndicator());
             },
