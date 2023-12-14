@@ -24,7 +24,11 @@ class SearchDatasource {
         for (var i = 0; i < rawDara.length; i++) {
           jobs.add(JobModel.fromJson(rawDara[i]));
         }
-        return jobs;
+        if (jobs.isNotEmpty) {
+          return jobs;
+        } else {
+          return SuccessModel(false, 'No data', 0);
+        }
       } else {
         return SuccessModel(
             response.data["success"],

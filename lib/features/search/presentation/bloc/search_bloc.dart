@@ -19,7 +19,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     try {
       var data = await datasource.searchVacancy(event.searchString);
       if (data is List<JobModel>) {
-        emit(SearchVacancySuccess(models: data));
+        if (data.isNotEmpty) {
+          emit(SearchVacancySuccess(models: data));
+        } 
       } else {
         emit(SearchVacancyFailure(model: data));
       }

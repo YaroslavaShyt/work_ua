@@ -1,5 +1,5 @@
 class APIDatasource {
-  static const url = "http://192.168.1.2:5000/";
+  static const url = "http://192.168.1.4:5000/";
 
   static const apiUrl = "${url}api/";
   static const registerUrl = "${apiUrl}register";

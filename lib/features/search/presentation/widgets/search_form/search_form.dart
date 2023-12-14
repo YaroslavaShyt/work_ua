@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
+import 'package:work_ua/features/search/presentation/bloc/search_bloc.dart';
+import 'package:work_ua/features/search/presentation/pages/search_result.dart';
 import 'package:work_ua/features/search/presentation/widgets/search_form/form_field.dart';
 
 class SearchForm extends StatefulWidget {
@@ -41,7 +44,10 @@ class _SearchFormState extends State<SearchForm> {
               width: double.infinity,
               child: Button(
                 text: "Знайти вакансії",
-                onTap: () => {},
+                onTap: () => {
+                  Navigator.of(context).pushNamed(SearchResultPage.id, arguments: requestController.text)
+                  
+                },
                 color: crimsonColor,
                 textColor: whiteColor,
               ),

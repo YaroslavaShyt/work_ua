@@ -11,7 +11,9 @@ final class SearchInitial extends SearchState {}
 
 class SearchVacancySuccess extends SearchState {
   final List<JobModel> models;
-  const SearchVacancySuccess({required this.models});
+  SearchVacancySuccess({required this.models}){
+    print('in search success');
+  }
 }
 
 class SearchVacancyFailure extends SearchState {
