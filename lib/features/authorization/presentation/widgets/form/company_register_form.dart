@@ -150,6 +150,12 @@ class _RegisterFormState extends State<RegisterFormCompany> {
                       text: "Зареєструватись",
                       onTap: () {
                         var model = UserRegisterModel(
+                          usertype: 'company',
+                          socialMediaLinks: '',
+                          surname: 'lsdjf',
+                          patronymic: 'sdf',
+                          birthDate: 'ssdf',
+                          profilePhoto: '',
                             name: 'варварп',
                             title: 'ваправпр',
                             city: 'lypovets',

@@ -42,14 +42,14 @@ class ChatModel {
     );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
+        //"_id": id,
         "position": position,
         "companyName": companyName,
-        "isGroupChat": isGroupChat,
+       // "isGroupChat": isGroupChat,
         "user": List<dynamic>.from(user.map((x) => x)),
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-        "__v": v,
+      //  "createdAt": createdAt.toIso8601String(),
+      //  "updatedAt": updatedAt.toIso8601String(),
+     //   "__v": v,
      //   "latestMessage": latestMessage.toJson(),
       };
 }

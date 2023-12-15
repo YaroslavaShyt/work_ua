@@ -16,9 +16,9 @@ class AuthenticationDatasource {
     try {
       // print(jsonEncode(model.modelMap));
 
-      // print(model.usertype);
+      print(model.usertype);
       final response = await dio.post(APIDatasource.registerUrl,
-          options: buildOptions(), data: jsonEncode(model.modelMap));
+          options: buildOptions(), data: jsonEncode(model.toJson()));
       // print(response.statusCode);
       // print(response.data["data"]["token"]);
       if (response.statusCode == 201) {

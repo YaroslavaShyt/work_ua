@@ -10,7 +10,7 @@ sealed class UserState extends Equatable {
 final class UserInitial extends UserState {}
 
 final class GetUserSuccess extends UserState {
-  final UserRegisterModel userModel;
+  final UserGetModel userModel;
   const GetUserSuccess({required this.userModel});
 }
 

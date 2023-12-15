@@ -9,36 +9,36 @@ class SearchDatasource {
   final Dio dio = Dio();
 
   Future<dynamic> searchVacancy(String searchString) async {
-    try {
-      // print(jsonEncode(model.modelMap));
-      // print(model.usertype);
-      List<JobModel> jobs = [];
-      String token = await getAccessToken();
-      //print(token);
-      //print('${APIDatasource.userUrl}$userId');
-      final response = await dio.get("${APIDatasource.getJobs}$searchString",
-          options: buildOptions(authorization: 'Bearer $token'));
+    //   try {
+    // print(jsonEncode(model.modelMap));
+    // print(model.usertype);
+    List<JobModel> jobs = [];
+    String token = await getAccessToken();
+    //print(token);
+    //print('${APIDatasource.userUrl}$userId');
+    final response = await dio.get("${APIDatasource.getJobs}$searchString",
+        options: buildOptions(authorization: 'Bearer $token'));
 
-      if (response.statusCode == 200) {
-        var rawDara = response.data;
-        for (var i = 0; i < rawDara.length; i++) {
-          jobs.add(JobModel.fromJson(rawDara[i]));
-        }
-        if (jobs.isNotEmpty) {
-          return jobs;
-        } else {
-          return SuccessModel(false, 'No data', 0);
-        }
-      } else {
-        return SuccessModel(
-            response.data["success"],
-            response.data["data"]["message"] ?? 'No message provided.',
-            response.statusCode ?? 0);
+    if (response.statusCode == 200) {
+      var rawDara = response.data;
+      for (var i = 0; i < rawDara.length; i++) {
+        jobs.add(JobModel.fromJson(rawDara[i]));
       }
-    } catch (e) {
-      print(e.toString());
-      return SuccessModel(false, e.toString(), 0);
+      if (jobs.isNotEmpty) {
+        return jobs;
+      } else {
+        return SuccessModel(false, 'No data', 0);
+      }
+    } else {
+      return SuccessModel(
+          response.data["success"],
+          response.data["data"]["message"] ?? 'No message provided.',
+          response.statusCode ?? 0);
     }
+    //   } catch (e) {
+    //     print(e.toString());
+    //     return SuccessModel(false, e.toString(), 0);
+    //   }
   }
 
   Future<dynamic> getVacancy(String id) async {

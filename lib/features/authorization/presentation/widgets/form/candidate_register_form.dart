@@ -151,8 +151,15 @@ class _RegisterFormState extends State<RegisterFormCandidate> {
                       text: "Зареєструватись",
                       onTap: () {
                         var model = UserRegisterModel(
+                          socialMediaLinks: '',
+                          profilePhoto: '',
+                          title: '',
+                          workersQuantity: '',
+                          serviceType: '',
+                          description: '',
+                          usertype: "candidate",
                             name: nameController.text,
-                            patronimyc: patronimycController.text,
+                            patronymic: patronimycController.text,
                             surname: surnameController.text,
                             birthDate: dateOfBitrhController.text,
                             city: cityController.text,

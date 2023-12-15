@@ -11,7 +11,10 @@ final class ChatInitial extends ChatState {}
 
 final class GetChatsSuccess extends ChatState {
   final List<ChatModel> chats;
-  const GetChatsSuccess({required this.chats});
+  GetChatsSuccess({required this.chats}) {
+    print('in get chats>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+    print(chats);
+  }
 }
 
 final class GetChatsFailure extends ChatState {
@@ -27,4 +30,14 @@ final class GetChatSuccess extends ChatState {
 final class GetChatFailure extends ChatState {
   final SuccessModel model;
   const GetChatFailure({required this.model});
+}
+
+final class CreateChatSuccess extends ChatState {
+  final ChatModel chat;
+  const CreateChatSuccess({required this.chat});
+}
+
+final class CreateChatFailure extends ChatState {
+  final SuccessModel model;
+  const CreateChatFailure({required this.model});
 }

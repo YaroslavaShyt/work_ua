@@ -10,12 +10,13 @@ part 'chat_state.dart';
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final ChatDatasource datasource = ChatDatasource();
   ChatBloc() : super(ChatInitial()) {
-    on<ChatEvent>(_onGetChats);
+    on<InitiateGetChatsEvent>(_onGetChats);
+    on<InitiateCreateChatEvent>(_onCreateChats);
   }
 
   _onGetChats(event, emit) async {
     try {
-      var chats = await datasource.getAllChats(event.userId);
+      var chats = await datasource.getAllChats();
       if (chats is List<ChatModel>) {
         emit(GetChatsSuccess(chats: chats));
       } else {
@@ -28,15 +29,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   _onCreateChats(event, emit) async {
     try {
-      var chats = await datasource.createChat(event.model);
-      if (chats is List<ChatModel>) {
-        emit(GetChatsSuccess(chats: chats));
+      var chat = await datasource.createChat(event.model);
+      if (chat is ChatModel) {
+        emit(CreateChatSuccess(chat: chat));
       } else {
-        emit(GetChatsFailure(model: chats));
+        emit(CreateChatFailure(model: chat));
       }
     } catch (error) {
-      emit(GetChatsFailure(model: SuccessModel(false, error.toString(), 0)));
+      emit(CreateChatFailure(model: SuccessModel(false, error.toString(), 0)));
     }
   }
-  
 }

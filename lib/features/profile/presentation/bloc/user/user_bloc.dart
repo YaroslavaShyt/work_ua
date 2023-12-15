@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:work_ua/core/success_model.dart';
 import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
 import 'package:work_ua/features/profile/data/user_datasource.dart';
+import 'package:work_ua/features/profile/domain/user_get_model.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';

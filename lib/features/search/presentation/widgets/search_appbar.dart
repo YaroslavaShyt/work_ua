@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/home.dart';
 import 'package:work_ua/features/search/presentation/bloc/search_bloc.dart';
+import 'package:work_ua/features/search/presentation/pages/search_screen.dart';
 
 class SearchAppbar extends StatefulWidget implements PreferredSizeWidget {
   const SearchAppbar({Key? key}) : super(key: key);
@@ -26,7 +28,7 @@ class _SearchAppbarState extends State<SearchAppbar> {
           color: whiteColor,
         ),
         onPressed: () {
-          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacementNamed(HomeScreen.id);
         },
       ),
       title: Center(

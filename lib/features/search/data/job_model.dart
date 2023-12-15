@@ -4,12 +4,14 @@
 
 import 'dart:convert';
 
+import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
+
 JobModel jobModelFromJson(String str) => JobModel.fromJson(json.decode(str));
 
 String jobModelToJson(JobModel data) => json.encode(data.toJson());
 
 class JobModel {
-  String user;
+  UserRegisterModel user;
   String id;
   String date;
   String title;
@@ -34,7 +36,7 @@ class JobModel {
   });
 
   factory JobModel.fromJson(Map<String, dynamic> json) => JobModel(
-        user: json["user"] ?? 'test user ',
+        user: UserRegisterModel.fromJson(json["user"]),
         id: json["_id"],
         date: json["date"],
         title: json["title"],

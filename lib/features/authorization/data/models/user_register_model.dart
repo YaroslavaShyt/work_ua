@@ -1,50 +1,84 @@
+// To parse this JSON data, do
+//
+//     final userRegisterModel = userRegisterModelFromJson(jsonString);
+
+import 'dart:convert';
+
+UserRegisterModel userRegisterModelFromJson(String str) =>
+    UserRegisterModel.fromJson(json.decode(str));
+
+String userRegisterModelToJson(UserRegisterModel data) =>
+    json.encode(data.toJson());
+
 class UserRegisterModel {
-  final String? id;
-  final String usertype;
-  final String name;
-  final String city;
-  final String contactNumber;
-  final String email;
-  final String? password;
+  String usertype;
+  String name;
+  String surname;
+  String patronymic;
+  String birthDate;
+  String city;
+  String contactNumber;
+  String email;
+  String socialMediaLinks;
+  String password;
+  String profilePhoto;
+  String title;
+  String workersQuantity;
+  String serviceType;
+  String description;
 
-  final String? patronimyc;
-  final String? surname;
-  final String? birthDate;
+  UserRegisterModel({
+    required this.usertype,
+    required this.name,
+    required this.surname,
+    required this.patronymic,
+    required this.birthDate,
+    required this.city,
+    required this.contactNumber,
+    required this.email,
+    required this.socialMediaLinks,
+    required this.password,
+    required this.profilePhoto,
+    required this.title,
+    required this.workersQuantity,
+    required this.serviceType,
+    required this.description,
+  });
 
-  final String? title;
-  final String? workersQuantity;
-  final String? serviceType;
-  final String? description;
+  factory UserRegisterModel.fromJson(Map<String, dynamic> json) =>
+      UserRegisterModel(
+        usertype: json["usertype"],
+        name: json["name"],
+        surname: json["surname"] ?? 'surn',
+        patronymic: json["patronymic"] ?? 'surn',
+        birthDate: json["birthDate"] ?? 'surn',
+        city: json["city"] ?? 'surn',
+        contactNumber: json["contactNumber"] ?? 'surn',
+        email: json["email"] ?? 'surn',
+        socialMediaLinks: json["socialMediaLinks"].toString() ?? 'surn',
+        password: json["password"] ?? 'surn',
+        profilePhoto: json["profilePhoto"] ?? 'surn',
+        title: json["title"] ?? 'surn',
+        workersQuantity: json["workersQuantity"] ?? 'surn',
+        serviceType: json["serviceType"] ?? 'surn',
+        description: json["description"] ?? 'surn',
+      );
 
-  UserRegisterModel(
-      {this.usertype = "candidate",
-      this.id,
-      required this.name,
-      required this.city,
-      required this.contactNumber,
-      required this.email,
-      this.password,
-      this.patronimyc,
-      this.surname,
-      this.birthDate,
-      this.title,
-      this.description,
-      this.serviceType,
-      this.workersQuantity});
-
-  Map<String, dynamic> get modelMap => {
+  Map<String, dynamic> toJson() => {
         "usertype": usertype,
         "name": name,
+        "surname": surname,
+        "patronymic": patronymic,
+        "birthDate": birthDate,
         "city": city,
         "contactNumber": contactNumber,
         "email": email,
+        "socialMediaLinks": socialMediaLinks,
         "password": password,
-        "surname": surname,
-        "patronymic": patronimyc,
-        "birthDate": birthDate,
+        "profilePhoto": profilePhoto,
         "title": title,
-        "description": description,
+        "workersQuantity": workersQuantity,
         "serviceType": serviceType,
-        "workersQuantity": workersQuantity
+        "description": description,
       };
 }

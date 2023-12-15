@@ -4,9 +4,14 @@ import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/services/shared_pref_user.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
+import 'package:work_ua/features/notifications/chat/domain/chat_model.dart';
+import 'package:work_ua/features/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
+import 'package:work_ua/features/notifications/chat/presentation/pages/chat_screen.dart';
 import 'package:work_ua/features/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/features/profile/presentation/widgets/my_cvs/my_cvs_list.dart';
 import 'package:work_ua/features/search/data/job_model.dart';
+import 'package:work_ua/features/search/presentation/widgets/cv_modal_bottom_sheet.dart';
+import 'package:work_ua/features/search/presentation/widgets/cv_modal_list.dart';
 import 'package:work_ua/features/search/presentation/widgets/vacancy_item_ovals_row.dart';
 
 class VacancyScreen extends StatefulWidget {
@@ -94,7 +99,7 @@ class _VacancyScreenState extends State<VacancyScreen> {
                 style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w200),
               ),
               Text(
-                widget.model.user,
+                widget.model.user.title ?? '**no title',
                 style: const TextStyle(fontSize: 20.0),
               ),
               const SizedBox(
@@ -132,29 +137,38 @@ class _VacancyScreenState extends State<VacancyScreen> {
                   textColor: whiteColor,
                   color: crimsonColor,
                   onTap: () => showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (BuildContext context) {
-                        var cvBloc = context.read<CVBloc>();
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      var cvBloc = context.read<CVBloc>();
 
-                        if (cvBloc.state is CVGetAllSuccess) {
-                          return ModalBottomSheetContent(
-                            title: "Увійти",
-                            form: SizedBox(
-                              height: 200,
-                              child: MyCVsList(
-                                onTap: (){
-                                  
-                                },
-                                  cvs:
-                                      (cvBloc.state as CVGetAllSuccess).models),
+                      if (cvBloc.state is CVGetAllSuccess) {
+                        return BlocProvider(
+                          create: (context) => ChatBloc(),
+                          child: CVModalBottomSheetContent(
+                            title: 'Мої резюме',
+                            cvs: CVsModalList(
+                              cvs: (cvBloc.state as CVGetAllSuccess).models,
+                              chat: ChatModel(
+                                position: widget.model.title,
+                                id: widget.model.id,
+                                companyName:
+                                    widget.model.user.title ?? 'No title',
+                                isGroupChat: true,
+                                user: [userId],
+                                createdAt: DateTime(2023),
+                                updatedAt: DateTime(2023),
+                                v: 1,
+                              ),
                             ),
-                          );
-                        }
-                        return const CircularProgressIndicator();
-                      }),
+                          ),
+                        );
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),

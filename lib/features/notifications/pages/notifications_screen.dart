@@ -25,7 +25,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   Future<void> getUserId() async {
     userId = await getUserFieldNamed('id');
-    context.read<ChatBloc>().add(InitiateGetChatsEvent(userId: userId));
+    context.read<ChatBloc>().add(InitiateGetChatsEvent());
   }
 
   @override
@@ -41,6 +41,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               children: [NoNotifications()],
             );
           }
+          
           if (state is GetChatsSuccess) {
             return Center(
                 child: Padding(

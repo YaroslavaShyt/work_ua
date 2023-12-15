@@ -14,7 +14,7 @@ class ChatDatasource {
     try {
       //  print(jsonEncode(model.modelMap));
       // print(APIDatasource.createCvUrl);
-      // print(model.usertype);
+    //  print(model.toJson());
       String token = await getAccessToken();
       final response = await dio.post(APIDatasource.chatsUrl,
           options: buildOptions(authorization: 'Bearer $token'),
@@ -55,7 +55,7 @@ class ChatDatasource {
     }
   }
 
-  Future<dynamic> getAllChats(String userId) async {
+  Future<dynamic> getAllChats() async {
     List<ChatModel> chats = [];
     try {
       // print(jsonEncode(model.modelMap));
@@ -64,10 +64,8 @@ class ChatDatasource {
       // print(conditions);
       String token = await getAccessToken();
       print(token);
-      final response = await dio.get('${APIDatasource.chatsUrl}$userId',
-          options: buildOptions(
-              authorization:
-                  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzA5ZmMwYWY5MzYwN2FkNTM2Y2EzMyIsInBhc3N3b3JkIjoiVTJGc2RHVmtYMSswaGtKL3dXczc4RDNud3FFNXZQdk4zLzl2YlJSdmdGdmVaZDFFZWdvamdUMnVmWmRVVFlkSCIsImlhdCI6MTcwMTg3OTc0NSwiZXhwIjoxNzA2MTk5NzQ1fQ.qXIuQpdUyMD8bSNuq7vf3dhqRtOBmiKIsRJnH1RMRvM'));
+      final response = await dio.get('${APIDatasource.chatsUrl}',
+          options: buildOptions(authorization: 'Bearer $token'));
 
       if (response.statusCode == 200) {
         print(response.statusCode);

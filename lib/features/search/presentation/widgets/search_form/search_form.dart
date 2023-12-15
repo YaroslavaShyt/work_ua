@@ -45,8 +45,9 @@ class _SearchFormState extends State<SearchForm> {
               child: Button(
                 text: "Знайти вакансії",
                 onTap: () => {
-                  Navigator.of(context).pushNamed(SearchResultPage.id, arguments: requestController.text)
-                  
+                  Navigator.of(context).pushReplacementNamed(
+                      SearchResultPage.id,
+                      arguments: requestController.text)
                 },
                 color: crimsonColor,
                 textColor: whiteColor,

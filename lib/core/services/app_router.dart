@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:work_ua/core/widgets/home.dart';
 import 'package:work_ua/features/authorization/presentation/pages/start_screen.dart';
+import 'package:work_ua/features/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
 import 'package:work_ua/features/notifications/chat/presentation/bloc/message_bloc/message_bloc.dart';
 import 'package:work_ua/features/notifications/chat/presentation/pages/chat_screen.dart';
 import 'package:work_ua/features/notifications/chat/presentation/provider/chat_notifier.dart';
@@ -50,7 +51,9 @@ class AppRouter {
                 ));
       case VacancyScreen.id:
         JobModel model = routeSettings.arguments as JobModel;
-        return MaterialPageRoute(builder: (_) => VacancyScreen(model: model));
+        return MaterialPageRoute(
+          builder: (_) => VacancyScreen(model: model),
+        );
       default:
         return null;
     }

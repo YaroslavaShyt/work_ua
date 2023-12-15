@@ -3,6 +3,7 @@ import 'package:work_ua/core/api_datasource.dart';
 import 'package:work_ua/core/services/shared_pref_token.dart';
 import 'package:work_ua/core/success_model.dart';
 import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
+import 'package:work_ua/features/profile/domain/user_get_model.dart';
 
 class UserDatasource {
   final Dio dio = Dio();
@@ -18,24 +19,7 @@ class UserDatasource {
           options: buildOptions(authorization: 'Bearer $token'));
 
       if (response.statusCode == 200) {
-        if (response.data["usertype"] == 'candidate') {
-          return UserRegisterModel(
-              id: response.data["_id"],
-              name: response.data["name"],
-              contactNumber: response.data["contactNumber"],
-              email: response.data["email"],
-              city: response.data["city"].toString(),
-              description: response.data["description"]);
-        } else {
-          return UserRegisterModel(
-              id: response.data["_id"],
-              name: response.data["name"],
-              title: response.data["title"],
-              contactNumber: response.data["contactNumber"],
-              email: response.data["email"],
-              city: response.data["city"].toString(),
-              description: response.data["description"]);
-        }
+        return UserGetModel.fromJson(response.data);
       } else {
         return SuccessModel(
             response.data["success"],

@@ -3,7 +3,7 @@ import 'package:work_ua/features/authorization/data/models/user_register_model.d
 
 Future<void> saveUserData(UserRegisterModel model) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  model.modelMap.forEach((key, value) async {
+  model.toJson().forEach((key, value) async {
     if (value != null) {
       await prefs.setString(key, value);
     }
@@ -18,7 +18,7 @@ Future<void> saveUserDataNamedField(name, value) async {
 Future<bool> hasUserData(UserRegisterModel model) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Map<String, bool> data = {};
-  model.modelMap.forEach((key, value) {
+  model.toJson().forEach((key, value) {
     if (value != null) {
       data[key] = prefs.containsKey('accessToken');
     }
@@ -29,7 +29,7 @@ Future<bool> hasUserData(UserRegisterModel model) async {
 Future<Map> getUserData(UserRegisterModel model) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Map<String, String> data = {};
-  model.modelMap.forEach((key, value) {
+  model.toJson().forEach((key, value) {
       data[key] = prefs.getString(key) ?? '';
   });
   return data;
