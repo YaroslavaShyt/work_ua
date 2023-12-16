@@ -6,7 +6,7 @@ sealed class AuthenticationState {}
 final class AuthenticationInitial extends AuthenticationState {}
 
 final class AuthenticationSuccess extends AuthenticationState {
-  final SuccessModel model;
+  final UserRegisterModel model;
   AuthenticationSuccess(this.model);
 }
 

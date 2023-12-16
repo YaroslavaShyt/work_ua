@@ -14,6 +14,11 @@ import 'package:work_ua/features/candidate/search/data/job_model.dart';
 import 'package:work_ua/features/candidate/search/presentation/bloc/search_bloc.dart';
 import 'package:work_ua/features/candidate/search/presentation/pages/search_result.dart';
 import 'package:work_ua/features/candidate/search/presentation/pages/vacancy_screen.dart';
+import 'package:work_ua/features/company/home_company.dart';
+import 'package:work_ua/features/company/profile/presentation/pages/company_profile_screen.dart';
+import 'package:work_ua/features/company/search/company_search_screen.dart';
+import 'package:work_ua/features/company/search/company_search_screen_results.dart';
+import 'package:work_ua/features/company/search/cv_screen.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings routeSettings) {
@@ -54,6 +59,20 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => VacancyScreen(model: model),
         );
+      case HomeScreenCompany.id:
+        return MaterialPageRoute(builder: (_) => const HomeScreenCompany());
+      case CompanySearchResultPage.id:
+        String searchData = routeSettings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => SearchBloc(),
+                  child: CompanySearchResultPage(
+                    searchData: searchData,
+                  ),
+                ));
+      case CVScreenCompany.id:
+        CVModel model = routeSettings.arguments as CVModel;
+         return MaterialPageRoute(builder: (_) => CVScreenCompany(model: model,));
       default:
         return null;
     }

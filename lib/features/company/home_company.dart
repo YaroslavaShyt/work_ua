@@ -11,7 +11,7 @@ import 'package:work_ua/features/company/profile/presentation/pages/company_prof
 import 'package:work_ua/features/company/search/company_search_screen.dart';
 
 class HomeScreenCompany extends StatefulWidget {
-  static const id = "home_screen";
+  static const id = "home_screen_company";
 
   const HomeScreenCompany({super.key});
 

@@ -8,6 +8,7 @@ import 'package:work_ua/features/authorization/data/models/login_model.dart';
 import 'package:work_ua/features/authorization/presentation/bloc/bloc/authentication_bloc.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field_formatters.dart';
+import 'package:work_ua/features/company/home_company.dart';
 import 'form_field_validators.dart';
 
 class LogInForm extends StatefulWidget {
@@ -40,7 +41,11 @@ class _LogInFormState extends State<LogInForm> {
         }
         if (state is AuthenticationSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushReplacementNamed(context, HomeScreen.id);
+            if (state.model.usertype == "candidate") {
+              Navigator.pushReplacementNamed(context, HomeScreen.id);
+            } else {
+              Navigator.pushReplacementNamed(context, HomeScreenCompany.id);
+            }
           });
         }
         if (state is AuthenticationFail) {

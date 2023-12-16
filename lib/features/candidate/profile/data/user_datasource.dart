@@ -13,8 +13,8 @@ class UserDatasource {
       // print(jsonEncode(model.modelMap));
       // print(model.usertype);
       String token = await getAccessToken();
-      //print(token);
-      //print('${APIDatasource.userUrl}$userId');
+      print(token);
+      print('${APIDatasource.userUrl}$userId');
       final response = await dio.get("${APIDatasource.userUrl}$userId",
           options: buildOptions(authorization: 'Bearer $token'));
 

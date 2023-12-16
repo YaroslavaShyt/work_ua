@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:work_ua/features/candidate/profile/domain/cv_model.dart';
 import 'package:work_ua/features/candidate/search/presentation/pages/vacancy_screen.dart';
 import 'package:work_ua/features/company/search/cv_list_iterm.dart';
+import 'package:work_ua/features/company/search/cv_screen.dart';
 
 class CVList extends StatelessWidget {
   final List<CVModel> cvs;
@@ -15,12 +16,11 @@ class CVList extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .pushNamed(VacancyScreen.id, arguments: cvs[index]);
+                  .pushNamed(CVScreenCompany.id, arguments: cvs[index]);
             },
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: CVListItem(model: cvs[index])
-            ),
+                padding: const EdgeInsets.all(10.0),
+                child: CVListItem(model: cvs[index])),
           );
         });
   }

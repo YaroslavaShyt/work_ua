@@ -9,8 +9,10 @@ import 'package:work_ua/features/candidate/search/presentation/widgets/no_vacanc
 import 'package:work_ua/features/candidate/search/presentation/widgets/search_form/search_form.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/statistics_container/statictics_container.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/vacancy_list.dart';
+import 'package:work_ua/features/company/search/cv_search_form.dart';
 
 class CompanySearchScreen extends StatelessWidget {
+  static const id = "company_search_screen";
   const CompanySearchScreen({super.key});
 
   @override
@@ -29,10 +31,11 @@ class CompanySearchScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            const SearchForm(),
+            const CVSearchForm(),
             const SizedBox(
               height: 30,
             ),
+            // change to create vacancy
             SizedBox(
                 height: 60,
                 width: MediaQuery.of(context).size.width - 50,
@@ -43,9 +46,6 @@ class CompanySearchScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            SizedBox(
-                width: MediaQuery.of(context).size.width - 50,
-                child: const StaticticsContainer())
           ],
         )),
       ),

@@ -7,17 +7,17 @@ import 'package:work_ua/features/candidate/search/presentation/widgets/vacancy_l
 import 'package:work_ua/features/company/search/cv_list.dart';
 import 'package:work_ua/features/company/search/no_cvs.dart';
 
-class SearchResultPage extends StatefulWidget {
-  static const id = "search_result";
+class CompanySearchResultPage extends StatefulWidget {
+  static const id = "company_search_result";
   final String searchData;
-  const SearchResultPage({Key? key, required this.searchData})
+  const CompanySearchResultPage({Key? key, required this.searchData})
       : super(key: key);
 
   @override
-  State<SearchResultPage> createState() => _SearchResultPageState();
+  State<CompanySearchResultPage> createState() => _CompanySearchResultPageState();
 }
 
-class _SearchResultPageState extends State<SearchResultPage> {
+class _CompanySearchResultPageState extends State<CompanySearchResultPage> {
   @override
   Widget build(BuildContext context) {
     context

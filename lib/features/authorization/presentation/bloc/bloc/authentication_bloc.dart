@@ -23,7 +23,7 @@ class AuthenticationBloc
       //print("${event.model} in bloc");
       var result =
           await datasource.register(event.model);
-      if (result.success == true) {
+      if (result is UserRegisterModel) {
         emit(AuthenticationSuccess(result));
       } else {
         emit(AuthenticationFail(result));
@@ -37,7 +37,7 @@ class AuthenticationBloc
     print('in ligin bloc');
     try {
       var result = await datasource.logIn(event.model);
-      if (result.success == true) {
+      if (result is UserRegisterModel) {
         emit(AuthenticationSuccess(result));
       } else {
         emit(AuthenticationFail(result));

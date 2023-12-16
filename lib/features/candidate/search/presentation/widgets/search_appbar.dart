@@ -4,6 +4,7 @@ import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/features/candidate/home.dart';
 import 'package:work_ua/features/candidate/search/presentation/bloc/search_bloc.dart';
 import 'package:work_ua/features/candidate/search/presentation/pages/search_screen.dart';
+import 'package:work_ua/features/company/home_company.dart';
 
 class SearchAppbar extends StatefulWidget implements PreferredSizeWidget {
   final bool isCompany;
@@ -29,7 +30,11 @@ class _SearchAppbarState extends State<SearchAppbar> {
           color: whiteColor,
         ),
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(HomeScreen.id);
+          if (widget.isCompany) {
+            Navigator.of(context).pushReplacementNamed(HomeScreenCompany.id);
+          } else {
+            Navigator.of(context).pushReplacementNamed(HomeScreen.id);
+          }
         },
       ),
       title: Center(

@@ -59,14 +59,14 @@ class UserGetModel {
             List<String>.from(json["socialMediaLinks"].map((x) => x)),
         password: json["password"],
         profilePhoto: json["profilePhoto"],
-        surname: json["surname"],
-        patronymic: json["patronymic"],
-        birthDate: json["birthDate"],
+        surname: json["surname"] ?? 'no data',
+        patronymic: json["patronymic"] ?? 'no data',
+        birthDate: json["birthDate"] ?? 'no data',
         v: json["__v"] ?? 0,
-        title: json["title"],
-        workersQuantity: json["workersQuantity"],
-        serviceType: json["serviceType"],
-        description: json["description"],
+        title: json["title"] ?? 'no data',
+        workersQuantity: json["workersQuantity"] ?? 'no data',
+        serviceType: json["serviceType"] ?? 'no data',
+        description: json["description"] ?? 'no data',
       );
 
   Map<String, dynamic> toJson() => {
