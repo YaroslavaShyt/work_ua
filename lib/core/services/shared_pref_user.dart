@@ -40,3 +40,8 @@ Future<String> getUserFieldNamed(name) async {
   String value =  prefs.getString(name) ?? '';
   return value;
 }
+
+Future<void> removeValueFromSharedPreferences(String key) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove(key);
+}

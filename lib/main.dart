@@ -10,16 +10,22 @@ import 'package:work_ua/work_ua_app.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bool userExists = false;
+
   String accessToken = await getAccessToken();
-  //print("token: $accessToken");
   String userId = await getUserFieldNamed('id');
+  String userType = await getUserFieldNamed('usertype');
+
+  print("token: $accessToken");
   print(userId);
+  print(userType);
+  
   if (accessToken.isNotEmpty) {
     userExists = true;
   }
   runApp(BlocProvider(
     create: (context) => CVBloc(),
     child: MainApp(
+      usertype: userType,
       userExists: userExists,
       appRouter: AppRouter(),
     ),
