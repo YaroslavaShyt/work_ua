@@ -22,8 +22,12 @@ class ItemsMenuList extends StatelessWidget {
           text: 'Вихід',
           navigationString: StartScreen.id,
           onPressed: () async {
-            await removeValueFromSharedPreferences('token');
-            Navigator.pushReplacementNamed(context, StartScreen.id);
+            print('an attempt made');
+            var res = await removeValueFromSharedPreferences('accessToken');
+            if (res) {
+              Navigator.pushReplacementNamed(context, StartScreen.id);
+            }
+            //
           },
         ),
       ],

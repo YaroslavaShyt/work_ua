@@ -21,3 +21,8 @@ class InitiateGetVacancyEvent extends SearchEvent {
   final String id;
   const InitiateGetVacancyEvent({required this.id});
 }
+
+class InitiateSearchCVByQueryEvent extends SearchEvent {
+  final String searchString;
+  const InitiateSearchCVByQueryEvent({required this.searchString});
+}

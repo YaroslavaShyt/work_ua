@@ -59,14 +59,6 @@ class _HomeScreenCompanyState extends State<HomeScreenCompany> {
                 label: 'Пошук',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.thumb_up_alt_outlined),
-                label: 'Рекомендовані',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_border_outlined),
-                label: 'Збережені',
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(Icons.notifications_outlined),
                 label: 'Сповіщення',
               ),

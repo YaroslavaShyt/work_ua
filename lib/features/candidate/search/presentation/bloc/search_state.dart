@@ -40,3 +40,15 @@ class GetVacancyFailure extends SearchState {
   final SuccessModel model;
   const GetVacancyFailure({required this.model});
 }
+
+class SearchCVByQuerySuccess extends SearchState {
+  final List<CVModel> models;
+  SearchCVByQuerySuccess({required this.models}) {
+    //print('in search success');
+  }
+}
+
+class SearchCVByQueryFailure extends SearchState {
+  final SuccessModel model;
+  const SearchCVByQueryFailure({required this.model});
+}

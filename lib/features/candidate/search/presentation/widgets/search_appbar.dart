@@ -6,7 +6,8 @@ import 'package:work_ua/features/candidate/search/presentation/bloc/search_bloc.
 import 'package:work_ua/features/candidate/search/presentation/pages/search_screen.dart';
 
 class SearchAppbar extends StatefulWidget implements PreferredSizeWidget {
-  const SearchAppbar({Key? key}) : super(key: key);
+  final bool isCompany;
+  const SearchAppbar({Key? key, this.isCompany = false}) : super(key: key);
 
   @override
   State<SearchAppbar> createState() => _SearchAppbarState();
@@ -46,9 +47,14 @@ class _SearchAppbarState extends State<SearchAppbar> {
                 child: TextField(
                   controller: searchController,
                   onChanged: (data) {
-                    context
-                        .read<SearchBloc>()
-                        .add(InitiateSearchVacancyEvent(searchString: data));
+                    if (widget.isCompany == false) {
+                      context
+                          .read<SearchBloc>()
+                          .add(InitiateSearchVacancyEvent(searchString: data));
+                    } else {
+                      context.read<SearchBloc>().add(
+                          InitiateSearchCVByQueryEvent(searchString: data));
+                    }
                   },
                   decoration: const InputDecoration(
                     border:

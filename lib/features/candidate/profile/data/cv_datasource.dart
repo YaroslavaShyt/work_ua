@@ -114,6 +114,34 @@ class CVDatasource {
     }
   }
 
+  Future<dynamic> readAllBySearchString(String searchString) async {
+    List<CVModel> cvs = [];
+    try {
+      // print(jsonEncode(model.modelMap));
+      // print(model.usertype);
+      // print(APIDatasource.getAllCvUrl);
+      // print(conditions);
+      final response = await dio.get("${APIDatasource.getAllCvQuery}?query=$searchString",
+          options: buildOptions());
+
+      if (response.statusCode == 200) {
+        var listOfCVs = response.data["data"];
+        for (var i = 0; i < listOfCVs.length; i++) {
+          cvs.add(CVModel.fromJson(listOfCVs[i]));
+        }
+        return cvs;
+      } else {
+        return SuccessModel(
+            response.data["success"],
+            response.data["data"]["message"] ?? 'No message provided.',
+            response.statusCode ?? 0);
+      }
+    } catch (e) {
+      print(e.toString());
+      return SuccessModel(false, e.toString(), 0);
+    }
+  }
+
   Options buildOptions({String? authorization}) {
     return Options(
       headers: {
