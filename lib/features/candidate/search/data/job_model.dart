@@ -5,13 +5,14 @@
 import 'dart:convert';
 
 import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
+import 'package:work_ua/features/candidate/profile/domain/user_get_model.dart';
 
 JobModel jobModelFromJson(String str) => JobModel.fromJson(json.decode(str));
 
 String jobModelToJson(JobModel data) => json.encode(data.toJson());
 
 class JobModel {
-  UserRegisterModel user;
+  UserGetModel user;
   String id;
   String date;
   String title;
@@ -36,7 +37,7 @@ class JobModel {
   });
 
   factory JobModel.fromJson(Map<String, dynamic> json) => JobModel(
-        user: UserRegisterModel.fromJson(json["user"]),
+        user: UserGetModel.fromJson(json["user"]),
         id: json["_id"],
         date: json["date"],
         title: json["title"],

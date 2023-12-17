@@ -19,7 +19,7 @@ class InitiateGetChatEvent extends ChatEvent {
 
 class InitiateCreateChatEvent extends ChatEvent {
   final ChatModel model;
-  const InitiateCreateChatEvent({required this.model});
+  InitiateCreateChatEvent({required this.model}) {
+    print('initiated');
+  }
 }
-
-

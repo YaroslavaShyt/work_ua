@@ -12,6 +12,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc() : super(ChatInitial()) {
     on<InitiateGetChatsEvent>(_onGetChats);
     on<InitiateCreateChatEvent>(_onCreateChats);
+    on<InitiateGetChatEvent>(_onGetChat);
   }
 
   _onGetChats(event, emit) async {
@@ -37,6 +38,19 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
     } catch (error) {
       emit(CreateChatFailure(model: SuccessModel(false, error.toString(), 0)));
+    }
+  }
+
+   _onGetChat(event, emit) async {
+    try {
+      var chat = await datasource.getChat(event.chatId);
+      if (chat is ChatModel) {
+        emit(GetChatSuccess(chat: chat));
+      } else {
+        emit(GetChatFailure(model: chat));
+      }
+    } catch (error) {
+      emit(GetChatFailure(model: SuccessModel(false, error.toString(), 0)));
     }
   }
 }

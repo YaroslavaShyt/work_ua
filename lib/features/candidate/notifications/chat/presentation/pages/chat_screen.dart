@@ -6,6 +6,7 @@ import 'package:work_ua/core/services/shared_pref_user.dart';
 import 'package:work_ua/features/authorization/presentation/bloc/bloc/authentication_bloc.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/send_message_model.dart';
+import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/message_bloc/message_bloc.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/widgets/chat_appbar.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/widgets/message_input_field.dart';
@@ -13,11 +14,17 @@ import 'package:work_ua/features/candidate/notifications/chat/presentation/widge
 import 'package:work_ua/features/candidate/notifications/chat/presentation/widgets/message_right.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:work_ua/features/candidate/notifications/chat/presentation/provider/chat_notifier.dart';
+import 'package:work_ua/features/candidate/search/data/job_model.dart';
 
 class ChatScreen extends StatefulWidget {
   static const id = "chat_screen";
   final String chatId;
-  const ChatScreen({Key? key, required this.chatId}) : super(key: key);
+  //final JobModel jobModel;
+  const ChatScreen({
+    Key? key,
+    required this.chatId,
+    // /required this.jobModel
+  }) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -25,17 +32,17 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   IO.Socket? socket;
-
+  late String userId;
   final TextEditingController messageController = TextEditingController();
-  final List messages = const [
-    MessageLeft(message: 'Message 1'),
-    MessageRight(message: 'Message 2')
-  ];
+  List messages = [];
   List<MessageModel> userMessages = [];
   int offset = 1;
+  late String sendTo;
 
   @override
   void initState() {
+    initUserId();
+    context.read<ChatBloc>().add(InitiateGetChatEvent(chatId: widget.chatId));
     context
         .read<MessageBloc>()
         .add(InitiateGetMessages(chatId: widget.chatId, offset: offset));
@@ -43,6 +50,11 @@ class _ChatScreenState extends State<ChatScreen> {
     joinChat();
     handleNext();
     super.initState();
+  }
+
+  void initUserId() async {
+    userId = await getUserFieldNamed('id');
+    print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< $userId');
   }
 
   final ScrollController scrollController = ScrollController();
@@ -55,8 +67,8 @@ class _ChatScreenState extends State<ChatScreen> {
           print('<<<<LOADING>>>>');
 
           if (messages.length > 12) {
-            context.read<MessageBloc>().add(
-                InitiateGetMessages(chatId: widget.chatId, offset: offset++));
+            // context.read<MessageBloc>().add(
+            //     InitiateGetMessages(chatId: widget.chatId, offset: offset++));
             setState(() {});
           }
         }
@@ -70,21 +82,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void sendStopTypingEvent(String status) {
     socket!.emit('stop typing', status);
-  }
-
-  void sendMessage(String content, String chatId, String receiver) {
-    SendMessageModel model =
-        SendMessageModel(content: content, chatId: chatId, receiver: receiver);
-    context.read<MessageBloc>().add(InitiateSendMessage(message: model));
-    var state = context.read<MessageBloc>().state;
-    if (state is SendMessageSuccess) {
-      socket!.emit("new message", state.model);
-      sendStopTypingEvent(widget.chatId);
-      setState(() {
-        messageController.clear();
-        userMessages.insert(0, state.model);
-      });
-    }
   }
 
   void joinChat() {
@@ -110,76 +107,126 @@ class _ChatScreenState extends State<ChatScreen> {
           //chatNotifier.online.replaceRange(0, chatNotifier.online.length, [id]);
         });
 
-        socket!.on('typing', (status) {
-          //chatNotifier.typing = true;
-        });
-
         socket!.on('stop typing', (status) {
           //chatNotifier.typing = false;
         });
 
         socket!.on('message received', (newMessageReceived) {
-          sendStopTypingEvent(widget.chatId);
-          MessageModel message = MessageModel.fromJson(newMessageReceived);
-          if (message.sender.id != id) {
-            setState(() {
-              userMessages.insert(0, message);
-            });
-          }
+          //sendStopTypingEvent(widget.chatId);
+          print('\n\nmessage received on frontend:\n\n$newMessageReceived');
+
+          messageController.clear();
+          setState(() {
+            messages.add(MessageLeft(message: newMessageReceived));
+          });
         });
       });
     }
   }
 
+  void sendMessage(String content, String chatId, String receiver) async {
+    SendMessageModel model =
+        SendMessageModel(content: content, chatId: chatId, receiver: receiver);
+
+    context.read<MessageBloc>().add(InitiateSendMessage(message: model));
+
+    // await Future.delayed(const Duration(seconds: 2));
+    // var state = context.read<MessageBloc>().state;
+
+    // if (state is SendMessageSuccess) {
+    //   //  print(state.model.toJson());
+    var id = await getUserFieldNamed('id');
+    socket!.emit(
+        "new message",
+        MessageModel(
+            id: '',
+            sender: id,
+            content: content,
+            receiver: receiver,
+            chat: chatId,
+            readBy: [],
+            v: 1));
+    //  sendStopTypingEvent(widget.chatId);
+
+    messageController.clear();
+    setState(() {
+      messages.add(MessageRight(message: content));
+    });
+    // } else {
+    //   print("error socket send message");
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const ChatAppbar(
-        name: 'test name',
-        position: 'test position',
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-        child: BlocBuilder<MessageBloc, MessageState>(
-          builder: (context, state) {
-            if (state is GetMessagesSuccess) {
-              return Column(children: [
-                Expanded(
-                  child: ListView.builder(
-                    controller: scrollController,
-                    reverse: true,
-                    itemCount: state.messages.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: messages[messages.length - index - 1]);
-                    },
-                  ),
-                ),
-                SizedBox(
-                  height: 100,
-                  child: MessageInputField(
-                    controller: messageController,
-                    function: (controller) {
-                      setState(() {
-                        context.read<MessageBloc>().add(InitiateSendMessage(
-                            message: SendMessageModel(
-                                content: controller.text,
-                                chatId: widget.chatId,
-                                receiver: state.messages[0].receiver)));
-                      });
-                    },
-                  ),
-                ),
-              ]);
-            }
-            if (state is GetMessagesFailure) {
-              return Center(child: Text(state.model.message));
-            }
-            return const CircularProgressIndicator();
-          },
-        ),
-      ),
+    return BlocBuilder<ChatBloc, ChatState>(
+      builder: (context, state) {
+        if (state is GetChatSuccess) {
+          sendTo = state.chat.user[1]["_id"];
+          return Scaffold(
+            appBar: ChatAppbar(
+              name: state.chat.position,
+              position: state.chat.companyName,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: BlocBuilder<MessageBloc, MessageState>(
+                builder: (context, state) {
+                  if (state is GetMessagesSuccess) {
+                    messages
+                        .clear(); // Clear existing messages before adding new ones
+                    for (var i = 0; i < state.messages.length; i++) {
+                      if (state.messages[i].receiver == userId) {
+                        messages.add(
+                            MessageLeft(message: state.messages[i].content));
+                      } else {
+                        messages.add(
+                            MessageRight(message: state.messages[i].content));
+                      }
+                    }
+                  }
+                  if (state is GetMessagesFailure) {
+                    return Center(child: Text(state.model.message));
+                  }
+                  return Column(children: [
+                    Expanded(
+                      child: ListView.builder(
+                        controller: scrollController,
+                        reverse:
+                            true, // Set reverse to true for bottom-to-top scrolling
+                        itemCount: messages.length,
+                        itemBuilder: (context, index) {
+                          // Ensure the index is within the valid range
+                          if (index >= 0 && index < messages.length) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: messages[messages.length - index - 1],
+                            );
+                          } else {
+                            return Container(); // Return an empty container or handle it as needed
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 100,
+                      child: MessageInputField(
+                        controller: messageController,
+                        function: (messageController) async {
+                          sendMessage(
+                              messageController.text, widget.chatId, sendTo);
+                          messageController.clear();
+                        },
+                      ),
+                    ),
+                  ]);
+                },
+              ),
+            ),
+          );
+        }
+        return const CircularProgressIndicator();
+      },
     );
   }
 }

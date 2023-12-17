@@ -24,15 +24,18 @@ class MessageModel {
     required this.v,
   });
 
-  factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
-        id: json["_id"],
-        sender: json["sender"],
-        content: json["content"],
-        receiver: json["receiver"],
-        chat: json["chat"],
-        readBy: List<dynamic>.from(json["readBy"].map((x) => x)),
-        v: json["__v"],
-      );
+  factory MessageModel.fromJson(Map<String, dynamic> json) {
+    //print(json);
+    return MessageModel(
+      id: json["_id"],
+      sender: json["sender"],
+      content: json["content"],
+      receiver: json["receiver"],
+      chat: json["chat"],
+      readBy: List<dynamic>.from(json["readBy"].map((x) => x)),
+      v: json["__v"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "_id": id,

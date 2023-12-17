@@ -31,6 +31,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     try {
       var result = await datasource.getMessages(event.chatId, event.offset);
       if (result is List<MessageModel>) {
+        print('emited success');
         emit(GetMessagesSuccess(messages: result));
       } else {
         emit(GetMessagesFailure(model: result));

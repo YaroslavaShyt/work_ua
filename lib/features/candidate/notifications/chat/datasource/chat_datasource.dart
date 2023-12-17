@@ -14,10 +14,10 @@ class ChatDatasource {
     try {
       //  print(jsonEncode(model.modelMap));
       // print(APIDatasource.createCvUrl);
-    //  print(model.toJson());
+      //  print(model.toJson());
       String token = await getAccessToken();
       final response = await dio.post(APIDatasource.chatsUrl,
-          options: buildOptions(authorization: 'Bearer $token'),
+          options: buildOptions(authorization: 'token $token'),
           data: jsonEncode(model.toJson()));
       //print('after response?');
       if (response.statusCode == 200) {
@@ -38,11 +38,13 @@ class ChatDatasource {
     try {
       // print(jsonEncode(model.modelMap));
       // print(model.usertype);
-      final response = await dio.get(APIDatasource.chatsUrl,
-          options: buildOptions(), data: jsonDecode(chatId));
+      String token = await getAccessToken();
+      final response = await dio.get("${APIDatasource.chatsUrl}$chatId",
+          options: buildOptions(authorization: 'token $token'),
+          );
 
       if (response.statusCode == 200) {
-        // return ChatModel();
+        return ChatModel.fromJson(response.data);
       } else {
         return SuccessModel(
             response.data["success"],

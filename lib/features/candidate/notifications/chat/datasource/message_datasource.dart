@@ -17,14 +17,13 @@ class MessageDatasource {
       //  print(jsonEncode(model.modelMap));
       // print(APIDatasource.createCvUrl);
       // print(model.usertype);
+      print("Model in sendMessage input \n${model.toJson()}\n");
       String token = await getAccessToken();
       final response = await dio.post(APIDatasource.messagesUrl,
-          options: buildOptions(
-              authorization:
-                  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzA5ZmMwYWY5MzYwN2FkNTM2Y2EzMyIsInBhc3N3b3JkIjoiVTJGc2RHVmtYMSswaGtKL3dXczc4RDNud3FFNXZQdk4zLzl2YlJSdmdGdmVaZDFFZWdvamdUMnVmWmRVVFlkSCIsImlhdCI6MTcwMTg3OTc0NSwiZXhwIjoxNzA2MTk5NzQ1fQ.qXIuQpdUyMD8bSNuq7vf3dhqRtOBmiKIsRJnH1RMRvM'),
+          options: buildOptions(authorization: 'Bearer $token'),
           data: jsonEncode(model.toJson()));
       //print('after response?');
-      if (response.data["success"]) {
+      if (response.statusCode == 200) {
         return MessageModel.fromJson(response.data);
       } else {
         return SuccessModel(
@@ -47,18 +46,16 @@ class MessageDatasource {
       // print(model.usertype);
       String token = await getAccessToken();
       final response = await dio.get(APIDatasource.messagesUrl,
-          options: buildOptions(
-              authorization:
-                  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzA5ZmMwYWY5MzYwN2FkNTM2Y2EzMyIsInBhc3N3b3JkIjoiVTJGc2RHVmtYMSswaGtKL3dXczc4RDNud3FFNXZQdk4zLzl2YlJSdmdGdmVaZDFFZWdvamdUMnVmWmRVVFlkSCIsImlhdCI6MTcwMTg3OTc0NSwiZXhwIjoxNzA2MTk5NzQ1fQ.qXIuQpdUyMD8bSNuq7vf3dhqRtOBmiKIsRJnH1RMRvM'),
-          data: jsonEncode({"chatId":chatId, "page": offset.toString()}));
+          options: buildOptions(authorization: 'Bearer $token'),
+          data: jsonEncode({"chatId": chatId, "page": offset.toString()}));
       //print('after response?');
-     
-        var rawData = response.data;
-        for(var i = 0; i < rawData.length; i++){
-          messages.add(MessageModel.fromJson(response.data));
-        }
-        return messages;
-      
+
+      var rawData = response.data;
+      for (var i = 0; i < rawData.length; i++) {
+        messages.add(MessageModel.fromJson(response.data[i]));
+      }
+      //print(messages);
+      return messages;
     } catch (e) {
       print(e.toString());
       return SuccessModel(false, e.toString(), 0);

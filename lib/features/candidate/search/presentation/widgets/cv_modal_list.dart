@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/chat_model.dart';
+import 'package:work_ua/features/candidate/notifications/chat/domain/send_message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
+import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/message_bloc/message_bloc.dart';
 import 'package:work_ua/features/candidate/profile/domain/cv_model.dart';
 import 'package:work_ua/features/candidate/profile/presentation/pages/cv_screen.dart';
 import 'package:work_ua/features/candidate/profile/presentation/widgets/my_cvs/my_cv_list_item.dart';
@@ -21,8 +23,20 @@ class CVsModalList extends StatelessWidget {
               Future(() => context
                       .read<ChatBloc>()
                       .add(InitiateCreateChatEvent(model: chat)))
-                  .then((value) =>
-                      context.read<ChatBloc>().add(InitiateGetChatsEvent()));
+                  .then((value) {
+                    var state = context.read<ChatBloc>().state;
+                    if(state is CreateChatSuccess){
+                      context.read<MessageBloc>().add(InitiateSendMessage(
+                      message: SendMessageModel(
+                          chatId: state.chat.id,
+                          receiver: chat.user[1],
+                          content:
+                              'Hi, I would like to apply for ${chat.position}')));
+                    }
+                    })
+                  .then((value) => context
+                      .read<ChatBloc>()
+                      .add(const InitiateGetChatsEvent()));
             },
             child: CVModalListItem(
               model: cvs[index],

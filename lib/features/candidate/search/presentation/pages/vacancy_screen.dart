@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:work_ua/core/api_datasource.dart';
 import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/services/shared_pref_user.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/chat_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
+import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/message_bloc/message_bloc.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/pages/chat_screen.dart';
 import 'package:work_ua/features/candidate/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/features/candidate/profile/presentation/widgets/my_cvs/my_cvs_list.dart';
@@ -13,6 +15,7 @@ import 'package:work_ua/features/candidate/search/data/job_model.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/cv_modal_bottom_sheet.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/cv_modal_list.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/vacancy_item_ovals_row.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class VacancyScreen extends StatefulWidget {
   static const id = "vacancy_screen";
@@ -25,11 +28,41 @@ class VacancyScreen extends StatefulWidget {
 
 class _VacancyScreenState extends State<VacancyScreen> {
   late String userId;
+  late IO.Socket socket;
 
   @override
   void initState() {
     super.initState();
     initData();
+    // Підключення до сервера
+    socket = IO.io(APIDatasource.url, <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+    });
+
+    // Підключення до сервера при запуску
+    socket.connect();
+    socket.on('connect', (_) {
+      print('Connected to the server');
+    });
+
+    socket.on('disconnect', (_) {
+      print('Disconnected from the server');
+    });
+
+    // Слухаємо подію chat_created
+    socket.on('chat_created', (data) {
+      print('Received chat_created event: $data');
+    });
+  }
+
+  void createChat() {
+    // Отримуємо ідентифікатор користувача або якийсь інший унікальний ідентифікатор
+    String userId = '657c5cc02de50f087767de49';
+
+    // Надсилаємо подію chat_created на сервер
+    socket.emit('chat_created', {'userId': userId});
+    print('Chat created event sent');
   }
 
   Future<void> initData() async {
@@ -141,10 +174,13 @@ class _VacancyScreenState extends State<VacancyScreen> {
                     context: context,
                     builder: (BuildContext context) {
                       var cvBloc = context.read<CVBloc>();
-
+                      // createChat();
                       if (cvBloc.state is CVGetAllSuccess) {
-                        return BlocProvider(
-                          create: (context) => ChatBloc(),
+                        return MultiBlocProvider(
+                          providers: [
+                            BlocProvider(create: (context) => ChatBloc()),
+                            BlocProvider(create: (context) => MessageBloc())
+                          ],
                           child: CVModalBottomSheetContent(
                             title: 'Мої резюме',
                             cvs: CVsModalList(
@@ -155,7 +191,7 @@ class _VacancyScreenState extends State<VacancyScreen> {
                                 companyName:
                                     widget.model.user.title ?? 'No title',
                                 isGroupChat: true,
-                                user: [userId],
+                                user: [userId, widget.model.user.id],
                                 createdAt: DateTime(2023),
                                 updatedAt: DateTime(2023),
                                 v: 1,

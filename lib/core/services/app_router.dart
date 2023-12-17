@@ -38,13 +38,18 @@ class AppRouter {
         String chatId = routeSettings.arguments as String;
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider(
-                  child: BlocProvider(
+                child: MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
                       create: (context) => MessageBloc(),
-                      child: ChatScreen(
-                        chatId: chatId,
-                      )),
-                  create: (context) => ChatNotifier(),
-                ));
+                    ),
+                    BlocProvider(create: (context) => ChatBloc())
+                  ],
+                  child: ChatScreen(
+                    chatId: chatId,
+                  ),
+                ),
+                create: (context) => ChatNotifier()));
       case SearchResultPage.id:
         String searchData = routeSettings.arguments as String;
         return MaterialPageRoute(
@@ -72,7 +77,10 @@ class AppRouter {
                 ));
       case CVScreenCompany.id:
         CVModel model = routeSettings.arguments as CVModel;
-         return MaterialPageRoute(builder: (_) => CVScreenCompany(model: model,));
+        return MaterialPageRoute(
+            builder: (_) => CVScreenCompany(
+                  model: model,
+                ));
       default:
         return null;
     }
