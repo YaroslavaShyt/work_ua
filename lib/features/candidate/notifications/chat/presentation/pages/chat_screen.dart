@@ -130,11 +130,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
     context.read<MessageBloc>().add(InitiateSendMessage(message: model));
 
-    // await Future.delayed(const Duration(seconds: 2));
-    // var state = context.read<MessageBloc>().state;
+    await Future.delayed(const Duration(seconds: 2));
+    var state = context.read<MessageBloc>().state;
 
-    // if (state is SendMessageSuccess) {
-    //   //  print(state.model.toJson());
+    if (state is SendMessageSuccess) {
+      print(state.model.toJson());
     var id = await getUserFieldNamed('id');
     socket!.emit(
         "new message",
@@ -146,15 +146,19 @@ class _ChatScreenState extends State<ChatScreen> {
             chat: chatId,
             readBy: [],
             v: 1));
-    //  sendStopTypingEvent(widget.chatId);
-
-    messageController.clear();
+      sendStopTypingEvent(widget.chatId);
+    print('MESSAGES before add: ${messages[messages.length - 1].message}');
+    
+    print('MESSAGES after add: ${messages[messages.length - 1].message}');
     setState(() {
       messages.add(MessageRight(message: content));
     });
-    // } else {
-    //   print("error socket send message");
-    // }
+    print('MESSAGES after: ${messages[messages.length - 1].message}');
+    messageController.clear();
+    
+     } else {
+       print("error socket send message");
+     }
   }
 
   @override
@@ -202,9 +206,9 @@ class _ChatScreenState extends State<ChatScreen> {
                               padding: const EdgeInsets.only(top: 10.0),
                               child: messages[messages.length - index - 1],
                             );
-                          } else {
-                            return Container(); // Return an empty container or handle it as needed
-                          }
+                          } //else {
+                          //    return Container(); // Return an empty container or handle it as needed
+                          //  }
                         },
                       ),
                     ),
@@ -212,10 +216,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       height: 100,
                       child: MessageInputField(
                         controller: messageController,
-                        function: (messageController) async {
+                        function: (messageController){
                           sendMessage(
                               messageController.text, widget.chatId, sendTo);
-                          messageController.clear();
+                        //  messageController.clear();
                         },
                       ),
                     ),
