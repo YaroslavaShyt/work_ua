@@ -3,7 +3,8 @@ import 'package:work_ua/core/colors.dart';
 
 class MessageLeft extends StatelessWidget {
   final String message;
-  const MessageLeft({super.key, required this.message});
+  final String time;
+  const MessageLeft({super.key, required this.message, required this.time});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +15,8 @@ class MessageLeft extends StatelessWidget {
           children: [
             const Icon(Icons.person),
             Text(
-              '10:10',
-              style: TextStyle(color: darkGrayColor, fontSize: 8.0),
+              time,
+              style: const TextStyle(color: darkGrayColor, fontSize: 8.0),
             )
           ],
         ),

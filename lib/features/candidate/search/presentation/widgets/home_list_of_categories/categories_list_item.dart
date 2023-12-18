@@ -16,7 +16,7 @@ class CategoryListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width - 40,
+      width: MediaQuery.of(context).size.width - 50,
       decoration:
           BoxDecoration(color: color, borderRadius: BorderRadius.circular(10)),
       child: Row(
@@ -26,7 +26,7 @@ class CategoryListItem extends StatelessWidget {
             icon: const Icon(
               Icons.contact_page_outlined,
               color: whiteColor,
-              size: 50,
+              size: 40,
             ),
             onPressed: () => {function()},
           ),

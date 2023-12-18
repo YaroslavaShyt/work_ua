@@ -4,7 +4,14 @@ import 'package:work_ua/core/colors.dart';
 class ChatAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String name;
   final String position;
-  const ChatAppbar({super.key, required this.name, required this.position});
+  final bool isTyping;
+  final bool isOnline;
+  const ChatAppbar(
+      {super.key,
+      required this.name,
+      required this.position,
+      required this.isOnline,
+      required this.isTyping});
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +32,19 @@ class ChatAppbar extends StatelessWidget implements PreferredSizeWidget {
               Text(
                 name,
                 style: const TextStyle(fontSize: 13.0, color: darkGrayColor),
+              ),
+              Text(
+                isTyping ? 'Пише' : '',
+                style: const TextStyle(fontSize: 13.0, color: darkGrayColor),
               )
             ],
           ),
         ),
       ),
-      actions: const [
+      actions: [
         Padding(
-          padding: EdgeInsets.only(right: 20.0),
-          child: Icon(Icons.person),
+          padding: const EdgeInsets.only(right: 20.0),
+          child: Icon(Icons.person, color: isOnline ? greenColor : blackColor,),
         )
       ],
     );

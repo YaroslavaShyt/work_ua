@@ -6,11 +6,13 @@ class ChatListElement extends StatelessWidget {
   final String position;
   final String companyName;
   final int messagesQuantity;
+  final bool hasMessage;
   const ChatListElement(
       {super.key,
       required this.name,
       required this.companyName,
       required this.position,
+      required this.hasMessage,
       this.messagesQuantity = 2});
 
   @override
@@ -20,14 +22,17 @@ class ChatListElement extends StatelessWidget {
       leading: const Icon(Icons.person),
       title: Text(position),
       subtitle: Text(name),
-      trailing: Container(
-        padding: const EdgeInsets.all(6),
-        decoration: BoxDecoration(shape: BoxShape.circle, color: redColor),
-        child: Text(
-          "$messagesQuantity",
-          style: TextStyle(color: whiteColor, fontSize: 15),
-        ),
-      ),
+      trailing: hasMessage
+          ? Container(
+              padding: const EdgeInsets.all(6),
+              decoration:
+                  const BoxDecoration(shape: BoxShape.circle, color: redColor),
+              child: Text(
+                "$messagesQuantity",
+                style: const TextStyle(color: whiteColor, fontSize: 15),
+              ),
+            )
+          : null,
     );
   }
 }

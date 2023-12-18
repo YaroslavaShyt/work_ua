@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/services/shared_pref_user.dart';
 import 'package:work_ua/features/authorization/presentation/pages/start_screen.dart';
 import 'package:work_ua/features/candidate/profile/presentation/pages/my_cvs_screen.dart';
@@ -11,25 +12,39 @@ class ItemsMenuList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        MenuItem(
-          text: 'Мої резюме',
-          navigationString: MyCVsScreen.id,
-          onPressed: () {
-            Navigator.pushNamed(context, MyCVsScreen.id);
-          },
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: lightGrayColor)),
+          child: MenuItem(
+            icon: const Icon(Icons.menu_book_outlined),
+            text: 'Мої резюме',
+            navigationString: MyCVsScreen.id,
+            onPressed: () {
+              Navigator.pushNamed(context, MyCVsScreen.id);
+            },
+          ),
         ),
-        MenuItem(
-          text: 'Вихід',
-          navigationString: StartScreen.id,
-          onPressed: () async {
-            print('an attempt made');
-            var res = await removeValueFromSharedPreferences('accessToken');
-            if (res) {
-              Navigator.pushReplacementNamed(context, StartScreen.id);
-            }
-            //
-          },
+        const SizedBox(
+          height: 10.0,
         ),
+        Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: lightGrayColor)),
+            child: MenuItem(
+              icon: const Icon(Icons.exit_to_app_outlined),
+              text: 'Вихід',
+              navigationString: StartScreen.id,
+              onPressed: () async {
+                print('an attempt made');
+                var res = await removeValueFromSharedPreferences('accessToken');
+                if (res) {
+                  Navigator.pushReplacementNamed(context, StartScreen.id);
+                }
+                //
+              },
+            )),
       ],
     );
   }

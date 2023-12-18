@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:work_ua/core/api_datasource.dart';
 import 'package:work_ua/core/services/shared_pref_user.dart';
-import 'package:work_ua/features/authorization/presentation/bloc/bloc/authentication_bloc.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/send_message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
@@ -13,8 +12,7 @@ import 'package:work_ua/features/candidate/notifications/chat/presentation/widge
 import 'package:work_ua/features/candidate/notifications/chat/presentation/widgets/message_left.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/widgets/message_right.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:work_ua/features/candidate/notifications/chat/presentation/provider/chat_notifier.dart';
-import 'package:work_ua/features/candidate/search/data/job_model.dart';
+import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
   static const id = "chat_screen";
@@ -38,6 +36,8 @@ class _ChatScreenState extends State<ChatScreen> {
   List<MessageModel> userMessages = [];
   int offset = 1;
   late String sendTo;
+  bool isTyping = false;
+  bool personOnline = false;
 
   @override
   void initState() {
@@ -50,6 +50,12 @@ class _ChatScreenState extends State<ChatScreen> {
     joinChat();
     handleNext();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    socket!.close();
+    super.dispose();
   }
 
   void initUserId() async {
@@ -103,12 +109,17 @@ class _ChatScreenState extends State<ChatScreen> {
       socket!.onConnect((_) {
         print("Connected to frontend");
         socket!.on('online-users', (id) {});
+        
         socket!.on('typing', (status) {
-          //chatNotifier.online.replaceRange(0, chatNotifier.online.length, [id]);
+          setState(() {
+            isTyping = true;
+          });
         });
 
         socket!.on('stop typing', (status) {
-          //chatNotifier.typing = false;
+          setState(() {
+            isTyping = false;
+          });
         });
 
         socket!.on('message received', (newMessageReceived) {
@@ -116,8 +127,22 @@ class _ChatScreenState extends State<ChatScreen> {
           print('\n\nmessage received on frontend:\n\n$newMessageReceived');
 
           messageController.clear();
+          if (this.mounted) {
+            setState(() {
+              messages.add(MessageLeft(message: newMessageReceived, time: DateFormat('hh:mm a').format(DateTime.now())));
+            });
+          }
+        });
+
+        socket!.on("joined chat", (room) {
           setState(() {
-            messages.add(MessageLeft(message: newMessageReceived));
+            personOnline = true;
+          });
+        });
+
+        socket!.on("left chat", (room) {
+          setState(() {
+            personOnline = false;
           });
         });
       });
@@ -135,30 +160,32 @@ class _ChatScreenState extends State<ChatScreen> {
 
     if (state is SendMessageSuccess) {
       print(state.model.toJson());
-    var id = await getUserFieldNamed('id');
-    socket!.emit(
-        "new message",
-        MessageModel(
-            id: '',
-            sender: id,
-            content: content,
-            receiver: receiver,
-            chat: chatId,
-            readBy: [],
-            v: 1));
+      var id = await getUserFieldNamed('id');
+      socket!.emit(
+          "new message",
+          MessageModel(
+              id: '',
+              sender: id,
+              content: content,
+              receiver: receiver,
+              chat: chatId,
+              readBy: [],
+              v: 1));
       sendStopTypingEvent(widget.chatId);
-    print('MESSAGES before add: ${messages[messages.length - 1].message}');
-    
-    print('MESSAGES after add: ${messages[messages.length - 1].message}');
-    setState(() {
-      messages.add(MessageRight(message: content));
-    });
-    print('MESSAGES after: ${messages[messages.length - 1].message}');
-    messageController.clear();
-    
-     } else {
-       print("error socket send message");
-     }
+      print('MESSAGES before add: ${messages[messages.length - 1].message}');
+
+      print('MESSAGES after add: ${messages[messages.length - 1].message}');
+      setState(() {
+        messages.add(MessageRight(
+          message: content,
+          time: DateFormat('hh:mm a').format(DateTime.now()),
+        ));
+      });
+      print('MESSAGES after: ${messages[messages.length - 1].message}');
+      messageController.clear();
+    } else {
+      print("error socket send message");
+    }
   }
 
   @override
@@ -169,6 +196,8 @@ class _ChatScreenState extends State<ChatScreen> {
           sendTo = state.chat.user[1]["_id"];
           return Scaffold(
             appBar: ChatAppbar(
+              isTyping: isTyping,
+              isOnline: personOnline,
               name: state.chat.position,
               position: state.chat.companyName,
             ),
@@ -181,11 +210,15 @@ class _ChatScreenState extends State<ChatScreen> {
                         .clear(); // Clear existing messages before adding new ones
                     for (var i = 0; i < state.messages.length; i++) {
                       if (state.messages[i].receiver == userId) {
-                        messages.add(
-                            MessageLeft(message: state.messages[i].content));
+                        messages.add(MessageLeft(
+                          message: state.messages[i].content,
+                          time: 'пізніше',
+                        ));
                       } else {
-                        messages.add(
-                            MessageRight(message: state.messages[i].content));
+                        messages.add(MessageRight(
+                          message: state.messages[i].content,
+                          time: 'пізніше',
+                        ));
                       }
                     }
                   }
@@ -215,11 +248,14 @@ class _ChatScreenState extends State<ChatScreen> {
                     SizedBox(
                       height: 100,
                       child: MessageInputField(
+                        chatId: widget.chatId,
+                        onComplete: sendStopTypingEvent,
+                        onChanged: sendTypingEvent,
                         controller: messageController,
-                        function: (messageController){
+                        function: (messageController) {
                           sendMessage(
                               messageController.text, widget.chatId, sendTo);
-                        //  messageController.clear();
+                          //  messageController.clear();
                         },
                       ),
                     ),

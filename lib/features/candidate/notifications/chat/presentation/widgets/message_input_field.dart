@@ -4,8 +4,16 @@ import 'package:work_ua/core/colors.dart';
 class MessageInputField extends StatelessWidget {
   final TextEditingController controller;
   final function;
+  final onChanged;
+  final onComplete;
+  final String chatId;
   const MessageInputField(
-      {super.key, required this.controller, required this.function});
+      {super.key,
+      required this.controller,
+      required this.function,
+      required this.onChanged,
+      required this.chatId,
+      required this.onComplete});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +24,10 @@ class MessageInputField extends StatelessWidget {
           height: 50.0,
           width: MediaQuery.of(context).size.width - 120,
           child: TextField(
+            onChanged: (chatId) {
+              onChanged(chatId);
+            },
+            onEditingComplete: () => onComplete(chatId),
             controller: controller,
             decoration: InputDecoration(
                 border: OutlineInputBorder(

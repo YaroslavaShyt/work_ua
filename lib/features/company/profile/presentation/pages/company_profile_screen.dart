@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/colors.dart';
 import 'package:work_ua/core/services/shared_pref_user.dart';
 import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
+import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
+import 'package:work_ua/features/candidate/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/features/candidate/profile/presentation/bloc/user/user_bloc.dart';
 import 'package:work_ua/features/candidate/profile/presentation/widgets/items_menu_list.dart';
 import 'package:work_ua/features/candidate/profile/presentation/widgets/welcome_widget.dart';
+import 'package:work_ua/features/candidate/search/presentation/widgets/create_job_form.dart';
+import 'package:work_ua/features/candidate/search/presentation/widgets/home_list_of_categories/categories_list_item.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/home_list_of_categories/hor_list_of_categories.dart';
 import 'package:work_ua/features/company/profile/presentation/widgets/company_welcome_profile.dart';
 
@@ -55,11 +59,29 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                       left: 20,
                       right: 20,
                       child: SizedBox(
-                        height: 100,
+                        height: 80,
                         width: MediaQuery.of(context).size.width,
-                        child: const HorizontalCategoriesList(
+                        child: HorizontalCategoriesList(
                           color: greenColor,
                           fontColor: whiteColor,
+                          item: CategoryListItem(
+                            color: greenColor,
+                            fontColor: whiteColor,
+                            title: 'Створити вакансію',
+                            function: () => {
+                              showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) {
+                                    return BlocProvider(
+                                      create: (context) => CVBloc(),
+                                      child: const ModalBottomSheetContent(
+                                          form: CreateJobForm(),
+                                          title: 'Створити вакансію'),
+                                    );
+                                  })
+                            },
+                          ),
                         ),
                       )),
                   Positioned(

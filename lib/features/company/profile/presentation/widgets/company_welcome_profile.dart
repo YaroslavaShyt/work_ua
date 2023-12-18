@@ -17,10 +17,15 @@ class CompanyWelcomeProfileWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Icon(
-            Icons.person_outline_rounded,
-            size: 70,
-            color: whiteColor,
+          Container(
+            padding: const EdgeInsets.all(10.0),
+            decoration: const BoxDecoration(
+                color: lightGrayColor, shape: BoxShape.circle),
+            child: const Icon(
+              Icons.person_outline_rounded,
+              size: 40,
+              color: darkGrayColor,
+            ),
           ),
           const SizedBox(
             width: 15,
@@ -39,7 +44,7 @@ class CompanyWelcomeProfileWidget extends StatelessWidget {
                   style: const TextStyle(
                       color: whiteColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 25))
+                      fontSize: 20))
             ],
           )
         ]),
