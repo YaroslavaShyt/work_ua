@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
+import 'package:work_ua/core/widgets/colors.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
 import 'package:work_ua/features/candidate/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/features/candidate/profile/presentation/bloc/user/user_bloc.dart';
 import 'package:work_ua/features/candidate/profile/presentation/widgets/items_menu_list.dart';
+import 'package:work_ua/features/candidate/profile/presentation/widgets/my_cvs/create_cv_form.dart';
 import 'package:work_ua/features/candidate/profile/presentation/widgets/welcome_widget.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/create_job_form.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/home_list_of_categories/categories_list_item.dart';
@@ -62,9 +63,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: greenColor,
                           fontColor: whiteColor,
                           item: CategoryListItem(
-                            color: blueColor,
+                            color: greenColor,
                             fontColor: whiteColor,
-                            title: 'Створити вакансію',
+                            title: 'Створити резюме',
                             function: () => {
                               showModalBottomSheet(
                                   context: context,
@@ -73,8 +74,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     return BlocProvider(
                                       create: (context) => CVBloc(),
                                       child: const ModalBottomSheetContent(
-                                          form: CreateJobForm(),
-                                          title: 'Створити вакансію'),
+                                          form: CreateCVForm(),
+                                          title: 'Створити резюме'),
                                     );
                                   })
                             },

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/candidate/home.dart';
 import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
-import 'package:work_ua/features/authorization/presentation/bloc/bloc/authentication_bloc.dart';
+import 'package:work_ua/features/authorization/presentation/bloc/authentication_bloc.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field.dart';
 
 class RegisterFormCompany extends StatefulWidget {

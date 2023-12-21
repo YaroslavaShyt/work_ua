@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 
 class MessageLeft extends StatelessWidget {
   final String message;
@@ -20,7 +20,8 @@ class MessageLeft extends StatelessWidget {
             )
           ],
         ),
-        Container(
+        Flexible(
+            child: Container(
           // width: 200,
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
@@ -29,7 +30,7 @@ class MessageLeft extends StatelessWidget {
             message,
             style: const TextStyle(color: whiteColor),
           ),
-        ),
+        )),
       ],
     );
   }

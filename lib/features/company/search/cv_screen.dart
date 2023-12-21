@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/data/api_datasource.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/candidate/profile/domain/cv_model.dart';
 import 'package:work_ua/features/candidate/profile/presentation/bloc/cv/cv_bloc.dart';

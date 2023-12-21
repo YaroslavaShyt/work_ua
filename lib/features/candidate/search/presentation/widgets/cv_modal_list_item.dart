@@ -14,7 +14,7 @@ class CVModalListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: IconButton(
-        icon: const Icon(Icons.ac_unit_rounded),
+        icon: const Icon(Icons.book_rounded),
         onPressed: () {
           //context.read<ChatBloc>().add(InitiateCreateChatEvent(model: chat));
         },

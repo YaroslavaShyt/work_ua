@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/services/app_router.dart';
-import 'package:work_ua/core/services/shared_pref_token.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
+import 'package:work_ua/core/services/router/app_router.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_token.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
 import 'package:work_ua/features/candidate/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/work_ua_app.dart';
 
@@ -12,12 +12,12 @@ Future<void> main() async {
   bool userExists = false;
 
   String accessToken = await getAccessToken();
-  String userId = await getUserFieldNamed('id');
+  //String userId = await getUserFieldNamed('id');
   String userType = await getUserFieldNamed('usertype');
 
-  print("token: $accessToken");
-  print(userId);
-  print(userType);
+  // print("token: $accessToken");
+  // print(userId);
+  // print(userType);
   
   if (accessToken.isNotEmpty) {
     userExists = true;

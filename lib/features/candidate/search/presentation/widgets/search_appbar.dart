@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/features/candidate/home.dart';
 import 'package:work_ua/features/candidate/search/presentation/bloc/search_bloc.dart';
 import 'package:work_ua/features/candidate/search/presentation/pages/search_screen.dart';

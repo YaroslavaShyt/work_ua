@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/services/shared_pref_token.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
-import 'package:work_ua/core/success_model.dart';
+import 'package:work_ua/core/data/api_datasource.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_token.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
 import 'package:work_ua/features/authorization/data/models/login_model.dart';
 
@@ -16,7 +15,7 @@ class AuthenticationDatasource {
     try {
       // print(jsonEncode(model.modelMap));
 
-      print(model.usertype);
+      //print(model.usertype);
       final response = await dio.post(APIDatasource.registerUrl,
           options: buildOptions(), data: jsonEncode(model.toJson()));
       // print(response.statusCode);
@@ -35,7 +34,7 @@ class AuthenticationDatasource {
 
   Future<dynamic> logIn(LoginModel model) async {
     try {
-      print(jsonEncode(model.modelMap));
+      //print(jsonEncode(model.modelMap));
       // print(model.usertype);
       final response = await dio.post(APIDatasource.loginUrl,
           options: buildOptions(), data: jsonEncode(model.modelMap));
@@ -44,8 +43,11 @@ class AuthenticationDatasource {
         await saveAccessToken(response.data["data"]["token"]);
         await saveUserDataNamedField('id', response.data["_id"]);
         await saveUserDataNamedField('usertype', response.data["usertype"]);
+        return UserRegisterModel.fromJson(response.data);
+      } else {
+        return SuccessModel(
+            false, response.data["data"]["message"], response.statusCode ?? 0);
       }
-      return UserRegisterModel.fromJson(response.data);
     } catch (e) {
       print(e.toString());
       return SuccessModel(false, e.toString(), 0);

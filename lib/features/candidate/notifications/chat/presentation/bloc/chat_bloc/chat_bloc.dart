@@ -1,14 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:work_ua/core/success_model.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/datasource/chat_datasource.dart';
+import 'package:work_ua/features/candidate/notifications/chat/datasource/message_datasource.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/chat_model.dart';
+import 'package:work_ua/features/candidate/notifications/chat/domain/message_model.dart';
+import 'package:work_ua/features/candidate/notifications/chat/domain/send_message_model.dart';
 
 part 'chat_event.dart';
 part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final ChatDatasource datasource = ChatDatasource();
+  final MessageDatasource messageDatasource = MessageDatasource();
+
   ChatBloc() : super(ChatInitial()) {
     on<InitiateGetChatsEvent>(_onGetChats);
     on<InitiateCreateChatEvent>(_onCreateChats);
@@ -32,7 +37,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     try {
       var chat = await datasource.createChat(event.model);
       if (chat is ChatModel) {
-        emit(CreateChatSuccess(chat: chat));
+        var res = await messageDatasource.sendMessage(SendMessageModel(
+            content: event.initMessage.content,
+            chatId: chat.id,
+            receiver: event.initMessage.receiver));
+        if (res is MessageModel) {
+          emit(CreateChatSuccess(chat: chat));
+        } else {
+          emit(CreateChatFailure(model: res));
+        }
       } else {
         emit(CreateChatFailure(model: chat));
       }
@@ -41,7 +54,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-   _onGetChat(event, emit) async {
+  _onGetChat(event, emit) async {
     try {
       var chat = await datasource.getChat(event.chatId);
       if (chat is ChatModel) {

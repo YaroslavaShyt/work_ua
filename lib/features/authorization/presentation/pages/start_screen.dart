@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
-import 'package:work_ua/features/authorization/presentation/bloc/bloc/authentication_bloc.dart';
+import 'package:work_ua/features/authorization/presentation/bloc/authentication_bloc.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/company_register_form.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/login_form.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/candidate_register_form.dart';

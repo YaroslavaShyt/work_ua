@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:work_ua/core/colors.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
+import 'package:work_ua/core/widgets/colors.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
 import 'package:work_ua/features/authorization/presentation/pages/start_screen.dart';
 import 'package:work_ua/features/candidate/profile/presentation/pages/my_cvs_screen.dart';
 import 'package:work_ua/features/candidate/profile/presentation/widgets/menu_item.dart';

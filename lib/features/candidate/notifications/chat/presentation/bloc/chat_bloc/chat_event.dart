@@ -19,7 +19,6 @@ class InitiateGetChatEvent extends ChatEvent {
 
 class InitiateCreateChatEvent extends ChatEvent {
   final ChatModel model;
-  InitiateCreateChatEvent({required this.model}) {
-    print('initiated');
-  }
+  final SendMessageModel initMessage;
+  const InitiateCreateChatEvent({required this.model, required this.initMessage});
 }

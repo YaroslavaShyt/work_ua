@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:work_ua/core/success_model.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/candidate/profile/data/cv_datasource.dart';
 import 'package:work_ua/features/candidate/profile/domain/cv_model.dart';
 
@@ -34,7 +34,7 @@ class CVBloc extends Bloc<CVEvent, CVState> {
     try {
       var result = await datasource.readAll(event.conditions);
       if (result is List<CVModel>) {
-        print(result);
+        //print(result);
         emit(CVGetAllSuccess(models: result));
       } else {
         emit(CVGetAllFail(model: result));

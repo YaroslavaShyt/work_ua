@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/oval_category_container.dart';
 import 'package:work_ua/features/candidate/search/presentation/widgets/vacancy_item_ovals_row.dart';
 

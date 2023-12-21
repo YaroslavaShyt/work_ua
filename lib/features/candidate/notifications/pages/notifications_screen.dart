@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
+import 'package:work_ua/core/widgets/colors.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
 import 'package:work_ua/core/widgets/blue_appbar.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/widgets/chat_list.dart';
@@ -35,7 +35,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       body: BlocBuilder<ChatBloc, ChatState>(
         builder: (context, state) {
           if (state is GetChatsFailure) {
-            print(state.model.message);
+            //print(state.model.message);
             return const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [NoNotifications()],

@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:work_ua/core/success_model.dart';
-import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/candidate/profile/data/user_datasource.dart';
 import 'package:work_ua/features/candidate/profile/domain/user_get_model.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/core/widgets/blue_appbar.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';

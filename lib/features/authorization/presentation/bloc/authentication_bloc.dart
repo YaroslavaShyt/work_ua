@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:work_ua/core/success_model.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/authorization/data/datasources/datasource.dart';
 import 'package:work_ua/features/authorization/data/models/login_model.dart';
 import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
@@ -34,7 +34,7 @@ class AuthenticationBloc
   }
 
   void _onLoginEvent(event, emit) async {
-    print('in ligin bloc');
+    //print('in ligin bloc');
     try {
       var result = await datasource.logIn(event.model);
       if (result is UserRegisterModel) {
@@ -43,7 +43,7 @@ class AuthenticationBloc
         emit(AuthenticationFail(result));
       }
     } catch (e) {
-      print(e);
+      //print(e);
       emit(AuthenticationFail(SuccessModel(false, e.toString(), 0)));
     }
   }

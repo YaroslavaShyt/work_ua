@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/services/shared_pref_token.dart';
-import 'package:work_ua/core/success_model.dart';
-import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
+import 'package:work_ua/core/data/api_datasource.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_token.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/candidate/profile/domain/user_get_model.dart';
 
 class UserDatasource {
@@ -13,8 +12,8 @@ class UserDatasource {
       // print(jsonEncode(model.modelMap));
       // print(model.usertype);
       String token = await getAccessToken();
-      print(token);
-      print('${APIDatasource.userUrl}$userId');
+      //print(token);
+      //print('${APIDatasource.userUrl}$userId');
       final response = await dio.get("${APIDatasource.userUrl}$userId",
           options: buildOptions(authorization: 'Bearer $token'));
 

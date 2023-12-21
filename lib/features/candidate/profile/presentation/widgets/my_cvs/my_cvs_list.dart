@@ -13,11 +13,14 @@ class MyCVsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemBuilder: (context, index) {
-          return GestureDetector(
-              onTap: onTap, child: MyCVListItem(model: cvs[index]));
-        },
-        itemCount: cvs.length,
-      );
+      itemBuilder: (context, index) {
+        return GestureDetector(
+            onTap: () {
+              onTap(index);
+            },
+            child: MyCVListItem(model: cvs[index]));
+      },
+      itemCount: cvs.length,
+    );
   }
 }

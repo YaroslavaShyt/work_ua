@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 
 class NoRecommendedVacancy extends StatelessWidget {
   const NoRecommendedVacancy({super.key});

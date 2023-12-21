@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/success_model.dart';
+import 'package:work_ua/core/data/api_datasource.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/candidate/profile/domain/cv_model.dart';
 
 class CVDatasource {
   final Dio dio = Dio();
 
   Future<SuccessModel> create(model) async {
-    print(model);
+    //print(model);
     try {
-      print(jsonEncode(model.modelMap));
-      print(APIDatasource.createCvUrl);
+      //print(jsonEncode(model.modelMap));
+      //print(APIDatasource.createCvUrl);
       // print(model.usertype);
       final response = await dio.post(APIDatasource.createCvUrl,
           options: buildOptions(), data: jsonEncode(model.modelMap));
-      print('after response?');
+      //print('after response?');
       return SuccessModel(
           response.data["success"],
           response.data["data"]["message"] ?? 'No message provided.',

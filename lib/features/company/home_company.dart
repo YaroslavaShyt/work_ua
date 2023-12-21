@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/provider/chat_notifier.dart';
 import 'package:work_ua/features/candidate/profile/presentation/bloc/user/user_bloc.dart';

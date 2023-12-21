@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:work_ua/core/success_model.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/datasource/message_datasource.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/send_message_model.dart';
@@ -31,7 +31,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     try {
       var result = await datasource.getMessages(event.chatId, event.offset);
       if (result is List<MessageModel>) {
-        print('emited success');
+        //print('emited success');
         emit(GetMessagesSuccess(messages: result));
       } else {
         emit(GetMessagesFailure(model: result));

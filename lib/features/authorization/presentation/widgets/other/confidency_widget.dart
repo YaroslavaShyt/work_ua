@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 
 class ConfidencyPolitics extends StatelessWidget {
   const ConfidencyPolitics({super.key});

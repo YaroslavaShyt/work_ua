@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/features/candidate/profile/domain/cv_model.dart';
 
 class CVListItem extends StatelessWidget {
   final CVModel model;
-  const CVListItem(
-      {super.key,
-      required this.model});
+  const CVListItem({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +28,6 @@ class CVListItem extends StatelessWidget {
             const Icon(Icons.work)
             //SizedBox(height: 50, width: 50, child: Image.network(image))
           ],
-        ),
-        Text(
-          model.city,
-          style: const TextStyle(
-              fontSize: 18.0, color: blackColor, fontWeight: FontWeight.bold),
         ),
         Text(
           _truncateDescription(model.description),

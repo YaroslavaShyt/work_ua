@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 
 class ChatListElement extends StatelessWidget {
   final String name;
@@ -13,7 +13,7 @@ class ChatListElement extends StatelessWidget {
       required this.companyName,
       required this.position,
       required this.hasMessage,
-      this.messagesQuantity = 2});
+      required this.messagesQuantity});
 
   @override
   Widget build(BuildContext context) {

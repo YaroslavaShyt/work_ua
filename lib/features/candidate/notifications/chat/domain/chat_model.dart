@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:work_ua/features/candidate/notifications/chat/domain/latest_message_model.dart';
-
 ChatModel chatFromJson(String str) => ChatModel.fromJson(json.decode(str));
 
 String chatToJson(ChatModel data) => json.encode(data.toJson());

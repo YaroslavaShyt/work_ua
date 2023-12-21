@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/colors.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
+import 'package:work_ua/core/data/api_datasource.dart';
+import 'package:work_ua/core/widgets/colors.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/chat_model.dart';
@@ -177,27 +177,28 @@ class _VacancyScreenState extends State<VacancyScreen> {
                       // createChat();
                       if (cvBloc.state is CVGetAllSuccess) {
                         return MultiBlocProvider(
-                          providers: [
-                            BlocProvider(create: (context) => ChatBloc()),
+                           providers: [
+                        //     BlocProvider(create: (context) => ChatBloc()),
                             BlocProvider(create: (context) => MessageBloc())
-                          ],
-                          child: CVModalBottomSheetContent(
-                            title: 'Мої резюме',
-                            cvs: CVsModalList(
-                              cvs: (cvBloc.state as CVGetAllSuccess).models,
-                              chat: ChatModel(
-                                position: widget.model.title,
-                                id: widget.model.id,
-                                companyName:
-                                    widget.model.user.title ?? 'No title',
-                                isGroupChat: true,
-                                user: [userId, widget.model.user.id],
-                                createdAt: DateTime(2023),
-                                updatedAt: DateTime(2023),
-                                v: 1,
-                              ),
+                           ],
+                        child:
+                        CVModalBottomSheetContent(
+                          title: 'Мої резюме',
+                          cvs: CVsModalList(
+                            cvs: (cvBloc.state as CVGetAllSuccess).models,
+                            chat: ChatModel(
+                              position: widget.model.title,
+                              id: widget.model.id,
+                              companyName:
+                                  widget.model.user.title ?? 'No title',
+                              isGroupChat: true,
+                              user: [userId, widget.model.user.id],
+                              createdAt: DateTime(2023),
+                              updatedAt: DateTime(2023),
+                              v: 1,
                             ),
                           ),
+                           ),
                         );
                       }
                       return const CircularProgressIndicator();

@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/candidate/home.dart';
 import 'package:work_ua/features/authorization/data/models/login_model.dart';
-import 'package:work_ua/features/authorization/presentation/bloc/bloc/authentication_bloc.dart';
+import 'package:work_ua/features/authorization/presentation/bloc/authentication_bloc.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field.dart';
-import 'package:work_ua/features/authorization/presentation/widgets/form/form_field_formatters.dart';
 import 'package:work_ua/features/company/home_company.dart';
-import 'form_field_validators.dart';
 
 class LogInForm extends StatefulWidget {
   const LogInForm({super.key});
@@ -49,7 +46,7 @@ class _LogInFormState extends State<LogInForm> {
           });
         }
         if (state is AuthenticationFail) {
-          print('login fail');
+          //print('login fail');
           WidgetsBinding.instance.addPostFrameCallback((_) {
             showDialog(
                 context: context,
@@ -90,7 +87,7 @@ class _LogInFormState extends State<LogInForm> {
                     child: Button(
                       text: "Увійти",
                       onTap: () {
-                        print('pressed');
+                        //print('pressed');
                         var model = LoginModel(
                             email: emailController.text,
                             password: passwordController.text);

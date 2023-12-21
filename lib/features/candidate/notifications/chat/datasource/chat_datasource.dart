@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/services/shared_pref_token.dart';
-import 'package:work_ua/core/success_model.dart';
+import 'package:work_ua/core/data/api_datasource.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_token.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/chat_model.dart';
 import 'package:work_ua/features/candidate/profile/domain/cv_model.dart';
 
@@ -20,6 +20,7 @@ class ChatDatasource {
           options: buildOptions(authorization: 'token $token'),
           data: jsonEncode(model.toJson()));
       //print('after response?');
+      //print(response.statusCode);
       if (response.statusCode == 200) {
         return ChatModel.fromJson(response.data);
       } else {
@@ -39,9 +40,10 @@ class ChatDatasource {
       // print(jsonEncode(model.modelMap));
       // print(model.usertype);
       String token = await getAccessToken();
-      final response = await dio.get("${APIDatasource.chatsUrl}$chatId",
-          options: buildOptions(authorization: 'token $token'),
-          );
+      final response = await dio.get(
+        "${APIDatasource.chatsUrl}$chatId",
+        options: buildOptions(authorization: 'token $token'),
+      );
 
       if (response.statusCode == 200) {
         return ChatModel.fromJson(response.data);
@@ -65,17 +67,17 @@ class ChatDatasource {
       // print(APIDatasource.getAllCvUrl);
       // print(conditions);
       String token = await getAccessToken();
-      print(token);
-      final response = await dio.get('${APIDatasource.chatsUrl}',
+      //print(token);
+      final response = await dio.get(APIDatasource.chatsUrl,
           options: buildOptions(authorization: 'Bearer $token'));
 
       if (response.statusCode == 200) {
-        print(response.statusCode);
+        //print(response.statusCode);
         var listChats = response.data;
         for (var i = 0; i < listChats.length; i++) {
           chats.add(ChatModel.fromJson(listChats[i]));
         }
-        print(chats);
+        //print(chats);
         return chats;
       } else {
         return SuccessModel(

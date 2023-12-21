@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/colors.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
+import 'package:work_ua/core/data/api_datasource.dart';
+import 'package:work_ua/core/widgets/colors.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/chat_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/pages/chat_screen.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/widgets/chat_list_element.dart';
@@ -39,14 +39,14 @@ class _ChatListState extends State<ChatList> {
     });
     // діставати юзерайді з шеред преференсес
     id = await getUserFieldNamed('id');
-    print("GOTTEN FROM SHARED PREF: $id");
+    //print("GOTTEN FROM SHARED PREF: $id");
     socket!.connect();
 
     socket!.onConnect((_) {
       print("Connected to frontend in chats");
-      socket!.on('message received', (newMessageReceived) {
-        print(
-            '\n\nmessage received on frontend in chats page:\n\n$newMessageReceived');
+      socket!.on('message received over chat', (newMessageReceived) {
+        //print(
+        //   '\n\nmessage received on frontend in chats page:\n\n$newMessageReceived');
         hasMessages.add(newMessageReceived);
         //if (this.mounted) {
         setState(() {});
@@ -86,10 +86,12 @@ class _ChatListState extends State<ChatList> {
               .pushNamed(ChatScreen.id, arguments: widget.chats[index].id);
         },
         child: Container(
+          margin: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: lightGrayColor)),
           child: ChatListElement(
+            messagesQuantity: hasMessages.length,
             name: widget.chats[index].user[0]["name"] ?? '<no name>',
             companyName: widget.chats[index].companyName,
             position: widget.chats[index].position,
@@ -100,16 +102,3 @@ class _ChatListState extends State<ChatList> {
     );
   }
 }
-
-/*
-children: [
-        
-        GestureDetector(
-          onTap: () {},
-          child: const ChatListElement(
-              name: 'Ярослава',
-              companyName: 'Best prog',
-              position: 'Flutter developer'),
-        )
-      ],
-*/ 

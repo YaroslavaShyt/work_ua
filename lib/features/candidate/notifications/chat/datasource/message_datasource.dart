@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/services/shared_pref_token.dart';
-import 'package:work_ua/core/success_model.dart';
-import 'package:work_ua/features/candidate/notifications/chat/domain/chat_model.dart';
+import 'package:work_ua/core/data/api_datasource.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_token.dart';
+import 'package:work_ua/core/data/success_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/send_message_model.dart';
-import 'package:work_ua/features/candidate/profile/domain/cv_model.dart';
 
 class MessageDatasource {
   final Dio dio = Dio();
@@ -17,7 +15,7 @@ class MessageDatasource {
       //  print(jsonEncode(model.modelMap));
       // print(APIDatasource.createCvUrl);
       // print(model.usertype);
-      print("Model in sendMessage input \n${model.toJson()}\n");
+      //print("Model in sendMessage input \n${model.toJson()}\n");
       String token = await getAccessToken();
       final response = await dio.post(APIDatasource.messagesUrl,
           options: buildOptions(authorization: 'Bearer $token'),

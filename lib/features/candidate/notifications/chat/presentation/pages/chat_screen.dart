@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-import 'package:work_ua/core/api_datasource.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
+import 'package:work_ua/core/data/api_datasource.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/send_message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
@@ -17,11 +16,9 @@ import 'package:intl/intl.dart';
 class ChatScreen extends StatefulWidget {
   static const id = "chat_screen";
   final String chatId;
-  //final JobModel jobModel;
   const ChatScreen({
     Key? key,
     required this.chatId,
-    // /required this.jobModel
   }) : super(key: key);
 
   @override
@@ -31,6 +28,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   IO.Socket? socket;
   late String userId;
+  late String usertype;
   final TextEditingController messageController = TextEditingController();
   List messages = [];
   List<MessageModel> userMessages = [];
@@ -60,7 +58,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void initUserId() async {
     userId = await getUserFieldNamed('id');
-    print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< $userId');
+    usertype = await getUserFieldNamed('usertype');
+    //print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< $userId');
   }
 
   final ScrollController scrollController = ScrollController();
@@ -70,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
       if (scrollController.hasClients) {
         if (scrollController.position.maxScrollExtent ==
             scrollController.position.pixels) {
-          print('<<<<LOADING>>>>');
+          //print('<<<<LOADING>>>>');
 
           if (messages.length > 12) {
             // context.read<MessageBloc>().add(
@@ -101,7 +100,6 @@ class _ChatScreenState extends State<ChatScreen> {
       'transports': ['websocket'],
       'autoConnect': false,
     });
-    // діставати юзерайді з шеред преференсес
     var id = await getUserFieldNamed('id');
     if (id.isNotEmpty) {
       socket!.emit("setup", id);
@@ -109,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
       socket!.onConnect((_) {
         print("Connected to frontend");
         socket!.on('online-users', (id) {});
-        
+
         socket!.on('typing', (status) {
           setState(() {
             isTyping = true;
@@ -129,7 +127,9 @@ class _ChatScreenState extends State<ChatScreen> {
           messageController.clear();
           if (this.mounted) {
             setState(() {
-              messages.add(MessageLeft(message: newMessageReceived, time: DateFormat('hh:mm a').format(DateTime.now())));
+              messages.add(MessageLeft(
+                  message: newMessageReceived,
+                  time: DateFormat('hh:mm a').format(DateTime.now())));
             });
           }
         });
@@ -159,7 +159,7 @@ class _ChatScreenState extends State<ChatScreen> {
     var state = context.read<MessageBloc>().state;
 
     if (state is SendMessageSuccess) {
-      print(state.model.toJson());
+      //print(state.model.toJson());
       var id = await getUserFieldNamed('id');
       socket!.emit(
           "new message",
@@ -172,16 +172,16 @@ class _ChatScreenState extends State<ChatScreen> {
               readBy: [],
               v: 1));
       sendStopTypingEvent(widget.chatId);
-      print('MESSAGES before add: ${messages[messages.length - 1].message}');
+      //print('MESSAGES before add: ${messages[messages.length - 1].message}');
 
-      print('MESSAGES after add: ${messages[messages.length - 1].message}');
+      //print('MESSAGES after add: ${messages[messages.length - 1].message}');
       setState(() {
         messages.add(MessageRight(
           message: content,
           time: DateFormat('hh:mm a').format(DateTime.now()),
         ));
       });
-      print('MESSAGES after: ${messages[messages.length - 1].message}');
+      //print('MESSAGES after: ${messages[messages.length - 1].message}');
       messageController.clear();
     } else {
       print("error socket send message");
@@ -193,7 +193,9 @@ class _ChatScreenState extends State<ChatScreen> {
     return BlocBuilder<ChatBloc, ChatState>(
       builder: (context, state) {
         if (state is GetChatSuccess) {
-          sendTo = state.chat.user[1]["_id"];
+          sendTo = usertype == "candidate"
+              ? state.chat.user[1]["_id"]
+              : state.chat.user[0]["_id"];
           return Scaffold(
             appBar: ChatAppbar(
               isTyping: isTyping,
@@ -206,8 +208,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: BlocBuilder<MessageBloc, MessageState>(
                 builder: (context, state) {
                   if (state is GetMessagesSuccess) {
-                    messages
-                        .clear(); // Clear existing messages before adding new ones
+                    messages.clear();
                     for (var i = 0; i < state.messages.length; i++) {
                       if (state.messages[i].receiver == userId) {
                         messages.add(MessageLeft(
@@ -229,19 +230,15 @@ class _ChatScreenState extends State<ChatScreen> {
                     Expanded(
                       child: ListView.builder(
                         controller: scrollController,
-                        reverse:
-                            true, // Set reverse to true for bottom-to-top scrolling
+                        reverse: true,
                         itemCount: messages.length,
                         itemBuilder: (context, index) {
-                          // Ensure the index is within the valid range
                           if (index >= 0 && index < messages.length) {
                             return Padding(
                               padding: const EdgeInsets.only(top: 10.0),
                               child: messages[messages.length - index - 1],
                             );
-                          } //else {
-                          //    return Container(); // Return an empty container or handle it as needed
-                          //  }
+                          }
                         },
                       ),
                     ),
@@ -255,7 +252,6 @@ class _ChatScreenState extends State<ChatScreen> {
                         function: (messageController) {
                           sendMessage(
                               messageController.text, widget.chatId, sendTo);
-                          //  messageController.clear();
                         },
                       ),
                     ),

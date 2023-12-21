@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
+import 'package:work_ua/core/widgets/colors.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
 import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/modal/modal_bottom_sheet_register.dart';
 import 'package:work_ua/features/candidate/profile/presentation/bloc/cv/cv_bloc.dart';

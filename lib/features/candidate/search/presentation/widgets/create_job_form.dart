@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:work_ua/core/colors.dart';
-import 'package:work_ua/core/services/shared_pref_user.dart';
+import 'package:work_ua/core/widgets/colors.dart';
+import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field.dart';
 import 'package:work_ua/features/candidate/search/data/job_model.dart';

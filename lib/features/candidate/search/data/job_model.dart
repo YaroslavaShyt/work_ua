@@ -1,10 +1,4 @@
-// To parse this JSON data, do
-//
-//     final jobModel = jobModelFromJson(jsonString);
-
 import 'dart:convert';
-
-import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
 import 'package:work_ua/features/candidate/profile/domain/user_get_model.dart';
 
 JobModel jobModelFromJson(String str) => JobModel.fromJson(json.decode(str));

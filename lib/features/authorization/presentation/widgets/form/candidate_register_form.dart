@@ -1,14 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work_ua/core/colors.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/core/widgets/button.dart';
 import 'package:work_ua/features/candidate/home.dart';
 import 'package:work_ua/features/authorization/data/models/user_register_model.dart';
-import 'package:work_ua/features/authorization/presentation/bloc/bloc/authentication_bloc.dart';
+import 'package:work_ua/features/authorization/presentation/bloc/authentication_bloc.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field.dart';
 import 'package:work_ua/features/authorization/presentation/widgets/form/form_field_formatters.dart';
-import 'form_field_validators.dart';
 
 class RegisterFormCandidate extends StatefulWidget {
   const RegisterFormCandidate({super.key});
@@ -19,21 +17,21 @@ class RegisterFormCandidate extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterFormCandidate> {
   final TextEditingController emailController =
-      TextEditingController(text: 'data');
+      TextEditingController();
   final TextEditingController nameController =
-      TextEditingController(text: 'data');
+      TextEditingController();
   final TextEditingController surnameController =
-      TextEditingController(text: 'data');
+      TextEditingController();
   final TextEditingController patronimycController =
-      TextEditingController(text: 'data');
+      TextEditingController();
   final TextEditingController cityController =
-      TextEditingController(text: 'data');
+      TextEditingController();
   final TextEditingController phoneNumberController =
-      TextEditingController(text: '0678386793');
+      TextEditingController();
   final TextEditingController passwordController =
-      TextEditingController(text: 'data');
+      TextEditingController();
   final TextEditingController dateOfBitrhController =
-      TextEditingController(text: '16.01.2003');
+      TextEditingController();
 
   DateTime? dateOfBitrh;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
