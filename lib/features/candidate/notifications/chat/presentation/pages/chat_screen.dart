@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work_ua/core/data/api_datasource.dart';
 import 'package:work_ua/core/services/shared_preferences/shared_pref_user.dart';
+import 'package:work_ua/core/widgets/colors.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/domain/send_message_model.dart';
 import 'package:work_ua/features/candidate/notifications/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
@@ -99,6 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
     socket = IO.io(APIDatasource.url, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
+      'timeout': 5000
     });
     var id = await getUserFieldNamed('id');
     if (id.isNotEmpty) {
@@ -122,10 +124,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
         socket!.on('message received', (newMessageReceived) {
           //sendStopTypingEvent(widget.chatId);
-          print('\n\nmessage received on frontend:\n\n$newMessageReceived');
+          //print('\n\nmessage received on frontend:\n$newMessageReceived');
 
           messageController.clear();
-          if (this.mounted) {
+
+          if (mounted) {
             setState(() {
               messages.add(MessageLeft(
                   message: newMessageReceived,
@@ -261,7 +264,15 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           );
         }
-        return const CircularProgressIndicator();
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.white, // Колір фону індикатора
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Colors.blue), // Колір індикатора
+            ),
+          ),
+        );
       },
     );
   }

@@ -7,6 +7,7 @@ import 'package:work_ua/features/authorization/presentation/widgets/form/form_fi
 import 'package:work_ua/features/candidate/profile/domain/cv_model.dart';
 import 'package:work_ua/features/candidate/profile/presentation/bloc/cv/cv_bloc.dart';
 import 'package:work_ua/features/candidate/profile/presentation/pages/my_cvs_screen.dart';
+import 'package:work_ua/features/candidate/profile/presentation/pages/profile_screen.dart';
 
 class CreateCVForm extends StatefulWidget {
   final CVModel? model;
@@ -52,9 +53,14 @@ class _CreateCVFormState extends State<CreateCVForm> {
   Widget build(BuildContext context) {
     return BlocBuilder<CVBloc, CVState>(
       builder: (context, state) {
-        if (state is CVCreateSuccess || state is CVUpdateSuccess) {
+        if (state is CVCreateSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushReplacementNamed(context, MyCVsScreen.id);
+          });
+        }
+        if (state is CVUpdateSuccess) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pop();
           });
         }
         if (state is CVCreateFail) {

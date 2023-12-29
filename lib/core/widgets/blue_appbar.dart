@@ -12,10 +12,14 @@ class BlueAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: isBackButton
           ? IconButton(
+              color: whiteColor,
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: const Icon(Icons.arrow_back))
+              icon: const Icon(
+                Icons.arrow_back,
+                color: whiteColor,
+              ))
           : null,
       title: Text(
         title,
@@ -27,5 +31,5 @@ class BlueAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(56);
+  Size get preferredSize => const Size.fromHeight(70);
 }

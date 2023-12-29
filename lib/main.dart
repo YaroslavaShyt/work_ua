@@ -15,7 +15,7 @@ Future<void> main() async {
   //String userId = await getUserFieldNamed('id');
   String userType = await getUserFieldNamed('usertype');
 
-  // print("token: $accessToken");
+  // print("token: $accessToken");Т
   // print(userId);
   // print(userType);
   

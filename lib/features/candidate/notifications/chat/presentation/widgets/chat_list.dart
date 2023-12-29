@@ -19,6 +19,7 @@ class _ChatListState extends State<ChatList> {
   IO.Socket? socket;
   List<String> hasMessages = [];
   String id = '';
+  bool enteredChat = false;
   @override
   void initState() {
     connect();
@@ -36,6 +37,7 @@ class _ChatListState extends State<ChatList> {
     socket = IO.io(APIDatasource.url, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
+      'timeout': 5000
     });
     // діставати юзерайді з шеред преференсес
     id = await getUserFieldNamed('id');
@@ -46,10 +48,13 @@ class _ChatListState extends State<ChatList> {
       print("Connected to frontend in chats");
       socket!.on('message received over chat', (newMessageReceived) {
         //print(
-        //   '\n\nmessage received on frontend in chats page:\n\n$newMessageReceived');
-        hasMessages.add(newMessageReceived);
-        //if (this.mounted) {
-        setState(() {});
+        //'\n\nmessage received on frontend in chats page:\n\n$newMessageReceived');
+        if (!enteredChat) {
+          hasMessages.add(newMessageReceived);
+          //if (this.mounted) {
+          setState(() {});
+        }
+
         // }
       });
 
@@ -81,6 +86,7 @@ class _ChatListState extends State<ChatList> {
         onTap: () {
           setState(() {
             hasMessages.clear();
+            enteredChat = true;
           });
           Navigator.of(context)
               .pushNamed(ChatScreen.id, arguments: widget.chats[index].id);

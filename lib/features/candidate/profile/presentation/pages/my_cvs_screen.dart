@@ -17,7 +17,6 @@ class MyCVsScreen extends StatefulWidget {
 
 class _MyCVsScreenState extends State<MyCVsScreen> {
   late String userId;
-  
 
   @override
   void initState() {
@@ -49,9 +48,11 @@ class _MyCVsScreenState extends State<MyCVsScreen> {
                   );
                 }
                 return MyCVsList(
-                  onTap: (index){
-                    Navigator.of(context)
-                        .pushNamed(CVScreen.id, arguments: index);
+                  onTap: (index) {
+                    context
+                        .read<CVBloc>()
+                        .add(CVReadInitiateEvent(id: state.models[index].id!));
+                    Navigator.of(context).pushNamed(CVScreen.id);
                   },
                   cvs: state.models,
                 );
@@ -62,9 +63,10 @@ class _MyCVsScreenState extends State<MyCVsScreen> {
                 );
               }
               if (state is CVDeleteSuccess) {
-                context.read<CVBloc>().add(CVReadAllInitiateEvent(
-                    conditions: {"userId": userId}));
+                context.read<CVBloc>().add(
+                    CVReadAllInitiateEvent(conditions: {"userId": userId}));
               }
+
               return const Center(child: CircularProgressIndicator());
             },
           )),

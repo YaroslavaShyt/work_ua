@@ -12,8 +12,7 @@ class AppRouter {
       case MyCVsScreen.id:
         return MaterialPageRoute(builder: (_) => const MyCVsScreen());
       case CVScreen.id:
-        var model = routeSettings.arguments as CVModel;
-        return MaterialPageRoute(builder: (_) => CVScreen(model: model));
+        return MaterialPageRoute(builder: (_) => const CVScreen());
       case ChatScreen.id:
         String chatId = routeSettings.arguments as String;
         return MaterialPageRoute(
