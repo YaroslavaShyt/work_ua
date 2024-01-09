@@ -58,11 +58,17 @@ class _CreateCVFormState extends State<CreateCVForm> {
             Navigator.pushReplacementNamed(context, MyCVsScreen.id);
           });
         }
-        if (state is CVUpdateSuccess) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).pop();
-          });
-        }
+        // if (state is CVUpdateSuccess) {
+        //   // context
+        //   //     .read<CVBloc>()
+        //   //     .add(const CVReadAllInitiateEvent(conditions: {}));
+
+        //   WidgetsBinding.instance.addPostFrameCallback((_) {
+
+        //     Navigator.of(context).pop();
+        //    // Navigator.of(context).pop();
+        //   });
+        // }
         if (state is CVCreateFail) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             showDialog(
@@ -132,6 +138,15 @@ class _CreateCVFormState extends State<CreateCVForm> {
                       context
                           .read<CVBloc>()
                           .add(CVUpdateInitiateEvent(model: model));
+                      Future.delayed(Duration(seconds: 3));
+                      context
+                          .read<CVBloc>()
+                          .add(CVReadInitiateEvent(id: model.id!));
+
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.pop(
+                            context); // Navigate back to the previous screen
+                      });
                     } else {
                       var model = CVModel(
                           userId: userId,

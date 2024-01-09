@@ -30,16 +30,11 @@ class CVDatasource {
     try {
       // print(jsonEncode(model.modelMap));
       // print(model.usertype);
-      final response = await dio.post(APIDatasource.getCvUrl,
+      final response = await dio.get(APIDatasource.getCvUrl,
           options: buildOptions(), data: jsonEncode({"id": cvId}));
 
       if (response.statusCode == 200) {
-        return CVModel(
-            userId: response.data["data"]["userId"],
-            id: response.data["data"]["id"],
-            position: response.data["data"]["position"],
-            city: response.data["data"]["city"].toString(),
-            description: response.data["data"]["description"]);
+        return CVModel.fromJson(response.data["data"]["data"]);
       } else {
         return SuccessModel(
             response.data["success"],

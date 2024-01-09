@@ -19,8 +19,8 @@ class CVReadInitiateEvent extends CVEvent {
 }
 
 class CVReadAllInitiateEvent extends CVEvent {
-  Map<String, dynamic>? conditions;
-  CVReadAllInitiateEvent({this.conditions});
+  final Map<String, dynamic> conditions;
+  const CVReadAllInitiateEvent({required this.conditions});
 }
 
 class CVUpdateInitiateEvent extends CVEvent {

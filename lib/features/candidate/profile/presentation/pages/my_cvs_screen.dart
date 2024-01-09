@@ -41,7 +41,7 @@ class _MyCVsScreenState extends State<MyCVsScreen> {
           ),
           body: BlocBuilder<CVBloc, CVState>(
             builder: (context, state) {
-              if (state is CVGetAllSuccess) {
+              if (state is CVGetAllSuccess ) {
                 if (state.models.isEmpty) {
                   return const Center(
                     child: Text('Ще немає резюме.'),

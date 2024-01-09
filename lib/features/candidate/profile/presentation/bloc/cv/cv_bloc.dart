@@ -15,6 +15,7 @@ class CVBloc extends Bloc<CVEvent, CVState> {
     on<CVReadAllInitiateEvent>(_onCvReadAllInitiateEvent);
     on<CVDeleteInitiateEvent>(_onCvDeleteInitiateEvent);
     on<CVUpdateInitiateEvent>(_onCvUpdateInitiateEvent);
+    on<CVReadInitiateEvent>(_onCvReadInitiateEvent);
   }
 
   _onCvCreateInitiateEvent(event, emit) async {
@@ -41,6 +42,20 @@ class CVBloc extends Bloc<CVEvent, CVState> {
       }
     } catch (error) {
       emit(CVGetAllFail(model: SuccessModel(false, error.toString(), 0)));
+    }
+  }
+
+  _onCvReadInitiateEvent(event, emit) async {
+    try {
+      var result = await datasource.read(event.id);
+      if (result is CVModel) {
+        //print(result);
+        emit(CVGetSuccess(model: result));
+      } else {
+        emit(CVGetFail(model: result));
+      }
+    } catch (error) {
+      emit(CVGetFail(model: SuccessModel(false, error.toString(), 0)));
     }
   }
 
