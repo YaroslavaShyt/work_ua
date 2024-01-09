@@ -12,3 +12,49 @@ Work.ua - is a ukrainian service for job search. This clone is modified by imple
 - provider: ^6.1.1
 
 ## UI
+<table>
+  <tr>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-23.jpg" width="270" />
+    </td>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-29.jpg" width="270" />
+    </td>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-31.jpg" width="270" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-35.jpg" width="270" />
+    </td>
+     <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-36.jpg" width="270" />
+    </td>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-38.jpg" width="270" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-40.jpg" width="270" />
+    </td>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-42.jpg" width="270" />
+    </td>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-44.jpg" width="270" />
+    </td>
+  </tr>
+   <tr>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-45.jpg" width="270" />
+    </td>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-48.jpg" width="270" />
+    </td>
+    <td align="center">
+      <img src="./screenshots/photo_2024-01-05_10-35-50.jpg" width="270" />
+    </td>
+  </tr>
+</table>
